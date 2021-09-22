@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/frm_beranda">
+    <fragment
+        android:id="@+id/frm_beranda"
+        android:name="com.example.viewabsensi.BerandaFragment"
+        android:label="fragment_beranda"
+        tools:layout="@layout/fragment_beranda" />
+    <fragment
+        android:id="@+id/frm_absensi"
+        android:name="com.example.viewabsensi.AbsensiFragment"
+        android:label="fragment_absensi"
+        tools:layout="@layout/fragment_absensi" />
+    <fragment
+        android:id="@+id/frm_profil"
+        android:name="com.example.viewabsensi.ProfilFragment"
+        android:label="fragment_profil"
+        tools:layout="@layout/fragment_profil" />
+</navigation>

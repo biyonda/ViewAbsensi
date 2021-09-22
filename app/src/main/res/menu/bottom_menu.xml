@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/frm_beranda"
+        android:title="Beranda"
+        android:icon="@drawable/ic_home" />
+    <item
+        android:id="@+id/frm_absensi"
+        android:title="Absensi"
+        android:icon="@drawable/ic_fingerprint" />
+    <item
+        android:id="@+id/frm_profil"
+        android:title="Profil"
+        android:icon="@drawable/ic_person" />
+</menu>
