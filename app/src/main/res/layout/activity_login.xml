@@ -10,26 +10,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="#FAFAFA"
+        android:background="@drawable/login_bg_header"
         android:orientation="vertical">
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="24dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:background="@drawable/logo_round">
         </ImageView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text="Selamat datang di">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Absensi RS Dr. Soebandi Jember"
+            android:textColor="@color/white"
+            android:text="Soebandi E-Absensi"
             android:textSize="18dp"
             android:textStyle="bold">
         </TextView>
@@ -54,25 +57,29 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:text="Login Absensi"
-                android:textSize="16dp">
+                android:textSize="16dp"
+                android:textColor="@color/black">
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="Username">
+                android:text="Username"
+                android:textColor="@color/black">
             </TextView>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="8dp"
-                android:background="#FAFAFA"
+                android:background="@drawable/bt_white_round"
                 android:paddingHorizontal="12dp">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="2dp"
                     android:hint="Masukkan username pegawai"
+                    android:background="@color/white"
                     android:textSize="11dp">
                 </EditText>
             </LinearLayout>
@@ -81,13 +88,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="Password">
+                android:text="Password"
+                android:textColor="@color/black">
             </TextView>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="8dp"
-                android:background="#FAFAFA"
+                android:background="@drawable/bt_white_round"
                 android:orientation="horizontal"
                 android:paddingHorizontal="12dp"
                 android:weightSum="10">
@@ -95,7 +103,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="8.5"
+                    android:layout_marginVertical="2dp"
                     android:hint="Masukkan password pegawai"
+                    android:background="@color/white"
                     android:inputType="textPassword"
                     android:textSize="11dp">
                 </EditText>
@@ -107,7 +117,7 @@
                     <ImageView
                         android:layout_width="26dp"
                         android:layout_height="26dp"
-                        android:background="#CACACA">
+                        android:background="@drawable/ic_eye_open">
                     </ImageView>
                 </LinearLayout>
             </LinearLayout>
@@ -123,5 +133,15 @@
         android:layout_gravity="center"
         android:text="Login">
     </Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="Lupa Password"
+        android:textStyle="bold"
+        android:textColor="@color/green_dark">
+    </TextView>
 
 </LinearLayout>

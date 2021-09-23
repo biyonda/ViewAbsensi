@@ -4,14 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".ProfilFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/green_primary"
+        android:gravity="center_vertical|start">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="Profil Pengguna"
+            android:textStyle="bold"
+            android:textSize="21dp"
+            android:textColor="@color/white">
+        </TextView>
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="match_parent"
         app:cardElevation="4dp"
         app:cardCornerRadius="14dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginHorizontal="16dp">
         <LinearLayout
             android:layout_width="match_parent"
