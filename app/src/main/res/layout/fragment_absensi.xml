@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/green_primary"
+        android:background="@drawable/main_header"
         android:gravity="center_vertical|start">
         <TextView
             android:layout_width="wrap_content"

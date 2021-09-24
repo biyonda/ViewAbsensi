@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     tools:context=".SplashActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ini text">
-    </TextView>
+    <ImageView
+        android:id="@+id/splash_header"
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:background="@drawable/splash_header_top"
+        android:layout_alignParentTop="true">
+    </ImageView>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/splash_bottom"
+        android:layout_below="@id/splash_header"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@drawable/logo_round"></ImageView>
+
+        <TextView
+            android:id="@+id/txt_soebandi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Soebandi E-Absensi"
+            android:textColor="@color/green_primary"
+            android:textSize="24dp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aplikasi Absensi RSUD Dr. Soebandi"></TextView>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/splash_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splash_header_bottom">
+    </ImageView>
+
+</RelativeLayout>

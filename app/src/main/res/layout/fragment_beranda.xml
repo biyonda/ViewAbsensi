@@ -67,13 +67,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingHorizontal="16dp">
+
                         <ImageView
                             android:id="@+id/img_profil"
                             android:layout_width="75dp"
                             android:layout_height="100dp"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/profile_dummy_rectangle">
-                        </ImageView>
+                            android:background="@drawable/profile_dummy_rectangle"></ImageView>
+
                         <TextView
                             android:id="@+id/nama_pengguna"
                             android:layout_width="wrap_content"
@@ -84,8 +85,7 @@
                             android:text="Dheta Indra Edwina Elviera, S.Kom"
                             android:textColor="@color/green_dark"
                             android:textSize="16sp"
-                            android:textStyle="bold">
-                        </TextView>
+                            android:textStyle="bold"></TextView>
                         <TextView
                             android:id="@+id/nip_pengguna"
                             android:layout_width="wrap_content"
