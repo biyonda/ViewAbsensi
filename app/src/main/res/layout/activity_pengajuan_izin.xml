@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".EditProfilActivity">
+    tools:context=".PengajuanIzinActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Data Pengguna"
+            android:text="Pengajuan Izin"
             android:textStyle="bold"
             android:textSize="21sp"
             android:textColor="@color/white">
