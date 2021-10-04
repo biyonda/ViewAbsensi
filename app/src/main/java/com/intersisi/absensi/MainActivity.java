@@ -1,4 +1,4 @@
-package com.example.viewabsensi;
+package com.intersisi.absensi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;

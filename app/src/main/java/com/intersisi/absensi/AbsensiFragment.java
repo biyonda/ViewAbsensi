@@ -1,10 +1,8 @@
-package com.example.viewabsensi;
+package com.intersisi.absensi;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 import androidx.fragment.app.FragmentManager;
 

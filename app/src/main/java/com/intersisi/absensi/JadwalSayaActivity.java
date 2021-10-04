@@ -1,4 +1,4 @@
-package com.example.viewabsensi;
+package com.intersisi.absensi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,6 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class JadwalSayaActivity extends AppCompatActivity {

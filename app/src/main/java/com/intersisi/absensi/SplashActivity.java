@@ -1,11 +1,10 @@
-package com.example.viewabsensi;
+package com.intersisi.absensi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Bundle;
 
 public class SplashActivity extends AppCompatActivity {
 

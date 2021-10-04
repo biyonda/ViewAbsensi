@@ -1,4 +1,4 @@
-package com.example.viewabsensi;
+package com.intersisi.absensi;
 
 import android.content.Intent;
 import android.os.Bundle;
