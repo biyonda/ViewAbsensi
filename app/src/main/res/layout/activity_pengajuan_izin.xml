@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PengajuanIzinActivity">
+    tools:context=".Activity.PengajuanIzinActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

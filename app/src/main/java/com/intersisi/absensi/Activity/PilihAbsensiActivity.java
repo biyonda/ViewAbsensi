@@ -1,4 +1,4 @@
-package com.intersisi.absensi;
+package com.intersisi.absensi.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.intersisi.absensi.R;
 
 public class PilihAbsensiActivity extends AppCompatActivity {
 

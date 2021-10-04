@@ -6,17 +6,17 @@
     app:startDestination="@id/frm_beranda">
     <fragment
         android:id="@+id/frm_beranda"
-        android:name="com.intersisi.absensi.BerandaFragment"
+        android:name="com.intersisi.absensi.Activity.BerandaFragment"
         android:label="fragment_beranda"
         tools:layout="@layout/fragment_beranda" />
     <fragment
         android:id="@+id/frm_absensi"
-        android:name="com.intersisi.absensi.AbsensiFragment"
+        android:name="com.intersisi.absensi.Activity.AbsensiFragment"
         android:label="fragment_absensi"
         tools:layout="@layout/fragment_absensi" />
     <fragment
         android:id="@+id/frm_profil"
-        android:name="com.intersisi.absensi.ProfilFragment"
+        android:name="com.intersisi.absensi.Activity.ProfilFragment"
         android:label="fragment_profil"
         tools:layout="@layout/fragment_profil" />
 </navigation>

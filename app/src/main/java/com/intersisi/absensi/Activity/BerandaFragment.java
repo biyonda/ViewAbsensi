@@ -1,4 +1,4 @@
-package com.intersisi.absensi;
+package com.intersisi.absensi.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.intersisi.absensi.R;
 
 public class BerandaFragment extends Fragment {
 

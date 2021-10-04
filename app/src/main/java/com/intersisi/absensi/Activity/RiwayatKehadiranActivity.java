@@ -1,4 +1,4 @@
-package com.intersisi.absensi;
+package com.intersisi.absensi.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.intersisi.absensi.R;
 
 import java.util.Calendar;
 

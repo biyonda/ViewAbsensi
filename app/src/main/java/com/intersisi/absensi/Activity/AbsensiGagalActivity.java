@@ -1,14 +1,16 @@
-package com.intersisi.absensi;
+package com.intersisi.absensi.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class EditProfilActivity extends AppCompatActivity {
+import com.intersisi.absensi.R;
+
+public class AbsensiGagalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profil);
+        setContentView(R.layout.activity_absensi_gagal);
     }
 }

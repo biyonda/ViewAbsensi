@@ -10,31 +10,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViewAbsensi">
         <activity
-            android:name="com.intersisi.absensi.UbahProfilActivity"
+            android:name="com.intersisi.absensi.Activity.UbahProfilActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.PengajuanIzinActivity"
+            android:name="com.intersisi.absensi.Activity.PengajuanIzinActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.RiwayatKehadiranActivity"
+            android:name="com.intersisi.absensi.Activity.RiwayatKehadiranActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.JadwalSayaActivity"
+            android:name="com.intersisi.absensi.Activity.JadwalSayaActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.AbsensiGagalActivity"
+            android:name="com.intersisi.absensi.Activity.AbsensiGagalActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.AbsensiBerhasilActivity"
+            android:name="com.intersisi.absensi.Activity.AbsensiBerhasilActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.PilihAbsensiActivity"
+            android:name="com.intersisi.absensi.Activity.PilihAbsensiActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.EditProfilActivity"
+            android:name="com.intersisi.absensi.Activity.EditProfilActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.SplashActivity"
+            android:name="com.intersisi.absensi.Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,13 +43,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.intersisi.absensi.LoginActivity"
+            android:name="com.intersisi.absensi.Activity.LoginActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.UserProfileActivity"
+            android:name="com.intersisi.absensi.Activity.UserProfileActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.MainActivity"
+            android:name="com.intersisi.absensi.Activity.MainActivity"
             android:exported="true" />
     </application>
 
