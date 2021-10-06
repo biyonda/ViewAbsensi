@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.intersisi.absensi.R;
+import com.intersisi.absensi.Session.Session;
 
 public class BerandaFragment extends Fragment {
 
@@ -20,15 +22,27 @@ public class BerandaFragment extends Fragment {
     LinearLayout btn_jadwal_saya, btn_riwayat_kehadiran, btn_pengajuan_izin;
     Handler handler = new Handler();
 
+    TextView nama_pengguna, nip_pengguna, jabatan_pengguna;
+    Session session;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_beranda, container, false);
 
+        session = new Session(getContext());
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         btn_jadwal_saya = (LinearLayout) view.findViewById(R.id.btn_jadwal_saya);
         btn_riwayat_kehadiran = (LinearLayout) view.findViewById(R.id.btn_riwayat_kehadiran);
         btn_pengajuan_izin = (LinearLayout) view.findViewById(R.id.btn_pengajuan_izin);
+
+        nama_pengguna = view.findViewById(R.id.nama_pengguna);
+        nip_pengguna = view.findViewById(R.id.nip_pengguna);
+        jabatan_pengguna = view.findViewById(R.id.jabatan_pengguna);
+
+        nama_pengguna.setText(session.getNama());
+        nip_pengguna.setText(session.getNip());
+        jabatan_pengguna.setText(session.getNamaBagian());
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

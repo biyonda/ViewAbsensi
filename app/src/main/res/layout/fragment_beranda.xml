@@ -86,17 +86,18 @@
                             android:textColor="@color/green_dark"
                             android:textSize="16sp"
                             android:textStyle="bold"></TextView>
+
                         <TextView
                             android:id="@+id/nip_pengguna"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/nama_pengguna"
-                            android:layout_toRightOf="@+id/img_profil"
                             android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@+id/img_profil"
                             android:text="123456789101112"
-                            android:textSize="13sp"
-                            android:textColor="@color/black">
-                        </TextView>
+                            android:textColor="@color/black"
+                            android:textSize="13sp"></TextView>
+
                         <TextView
                             android:id="@+id/jabatan_pengguna"
                             android:layout_width="wrap_content"
@@ -105,8 +106,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/img_profil"
                             android:text="Staff PDE"
-                            android:textSize="13sp">
-                        </TextView>
+                            android:textSize="13sp"></TextView>
                         <TextView
                             android:id="@+id/shift_pengguna"
                             android:layout_width="wrap_content"

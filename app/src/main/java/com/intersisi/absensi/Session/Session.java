@@ -15,19 +15,15 @@ public class Session {
         this.editor = preferences.edit();
     }
 
-    public void setLoggedIn(Boolean loggedIn) {
-        editor.putBoolean("loggedIn", loggedIn);
-        editor.commit();
-    }
-
-    public void setUserStatus(Boolean loggedIn, String id_user, String name, String email, String token, String otoritas, String jenis_kelamin){
+    public void setUserStatus(Boolean loggedIn, String id_user, String nip, String nama, String token, String id_bagian, String nama_bagian, String inisial){
         editor.putBoolean("loggedIn", loggedIn);
         editor.putString("id_user", id_user);
-        editor.putString("name", name);
-        editor.putString("email", email);
+        editor.putString("nip", nip);
+        editor.putString("nama", nama);
         editor.putString("token", token);
-        editor.putString("otoritas", otoritas);
-        editor.putString("JNS_KELAMIN", jenis_kelamin);
+        editor.putString("id_bagian", id_bagian);
+        editor.putString("nama_bagian", nama_bagian);
+        editor.putString("inisial", inisial);
         editor.commit();
     }
 
@@ -35,5 +31,24 @@ public class Session {
         return preferences.getString("baseUrl", "192.168.100.235:8000");
     }
 
+    public boolean getUserLoggedIn() {
+        return preferences.getBoolean("loggedIn", false);
+    }
+
+    public String getToken() {
+        return preferences.getString("token", "");
+    }
+
+    public String getNip() {
+        return preferences.getString("nip", "");
+    }
+
+    public String getNama() {
+        return preferences.getString("nama", "");
+    }
+
+    public String getNamaBagian() {
+        return preferences.getString("nama_bagian", "");
+    }
 }
 

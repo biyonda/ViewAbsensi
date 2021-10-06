@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="Username"
+                android:text="NIP"
                 android:textColor="@color/black">
             </TextView>
             <LinearLayout
@@ -75,6 +75,7 @@
                 android:background="@drawable/bt_white_round"
                 android:paddingHorizontal="12dp">
                 <EditText
+                    android:id="@+id/nip"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="2dp"
@@ -100,6 +101,7 @@
                 android:paddingHorizontal="12dp"
                 android:weightSum="10">
                 <EditText
+                    android:id="@+id/password"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="8.5"
@@ -143,5 +145,13 @@
         android:textStyle="bold"
         android:textColor="@color/green_dark">
     </TextView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="invisible"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"></ProgressBar>
 
 </LinearLayout>
