@@ -12,9 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.intersisi.absensi.Api.Api;
+import com.intersisi.absensi.Api.RetrofitClient;
+import com.intersisi.absensi.Helpers.ApiError;
+import com.intersisi.absensi.Helpers.ErrorUtils;
 import com.intersisi.absensi.R;
+import com.intersisi.absensi.Response.BaseResponse;
 import com.intersisi.absensi.Session.Session;
+import com.intersisi.absensi.Table.JadwalHariIni;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BerandaFragment extends Fragment {
 
@@ -22,8 +33,10 @@ public class BerandaFragment extends Fragment {
     LinearLayout btn_jadwal_saya, btn_riwayat_kehadiran, btn_pengajuan_izin;
     Handler handler = new Handler();
 
-    TextView nama_pengguna, nip_pengguna, jabatan_pengguna;
+    TextView nama_pengguna, nip_pengguna, jabatan_pengguna, shift_pengguna;
     Session session;
+    Api api;
+    Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +44,8 @@ public class BerandaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_beranda, container, false);
 
         session = new Session(getContext());
+        api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
+
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         btn_jadwal_saya = (LinearLayout) view.findViewById(R.id.btn_jadwal_saya);
         btn_riwayat_kehadiran = (LinearLayout) view.findViewById(R.id.btn_riwayat_kehadiran);
@@ -39,10 +54,13 @@ public class BerandaFragment extends Fragment {
         nama_pengguna = view.findViewById(R.id.nama_pengguna);
         nip_pengguna = view.findViewById(R.id.nip_pengguna);
         jabatan_pengguna = view.findViewById(R.id.jabatan_pengguna);
+        shift_pengguna = view.findViewById(R.id.shift_pengguna);
 
         nama_pengguna.setText(session.getNama());
         nip_pengguna.setText(session.getNip());
         jabatan_pengguna.setText(session.getNamaBagian());
+
+        jadwalHariIni(session.getNip());
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -78,5 +96,27 @@ public class BerandaFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void jadwalHariIni(String nip) {
+        getJadwalHariIni = api.getJadwalHariIni(session.getNip());
+        getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
+                if (response.isSuccessful()) {
+                    shift_pengguna.setText("Kelompok Shift : "+response.body().getData().get(0).getNama());
+                } else {
+                    shift_pengguna.setText("Kelompok Shift : -");
+                    ApiError apiError = ErrorUtils.parseError(response);
+                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
+                shift_pengguna.setText("Kelompok Shift : -");
+                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.intersisi.absensi">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -16,35 +21,38 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/Theme.ViewAbsensi"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup"
-        android:theme="@style/Theme.ViewAbsensi">
+        tools:replace="android:allowBackup">
         <activity
-            android:name="com.intersisi.absensi.Activity.UbahProfilActivity"
+            android:name=".Activity.AbsenWajah"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.PengajuanIzinActivity"
+            android:name=".Activity.UbahProfilActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.RiwayatKehadiranActivity"
+            android:name=".Activity.PengajuanIzinActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.JadwalSayaActivity"
+            android:name=".Activity.RiwayatKehadiranActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.AbsensiGagalActivity"
+            android:name=".Activity.JadwalSayaActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.AbsensiBerhasilActivity"
+            android:name=".Activity.AbsensiGagalActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.PilihAbsensiActivity"
+            android:name=".Activity.AbsensiBerhasilActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.EditProfilActivity"
+            android:name=".Activity.PilihAbsensiActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.SplashActivity"
+            android:name=".Activity.EditProfilActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,13 +61,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.intersisi.absensi.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.UserProfileActivity"
+            android:name=".Activity.UserProfileActivity"
             android:exported="true" />
         <activity
-            android:name="com.intersisi.absensi.Activity.MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true" />
     </application>
 
