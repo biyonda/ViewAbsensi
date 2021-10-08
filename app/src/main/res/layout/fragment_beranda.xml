@@ -23,7 +23,7 @@
                     android:id="@+id/ly_header"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
-                    android:background="@drawable/dashboard_bg_header"
+                    android:background="@drawable/dashboard_bg_header2"
                     android:orientation="vertical"
                     android:paddingLeft="16dp">
 
@@ -42,7 +42,7 @@
                         android:layout_below="@+id/img_logo"
                         android:layout_marginTop="8dp"
                         android:text="Selamat datang di"
-                        android:textColor="#FFCC00"
+                        android:textColor="@color/white"
                         android:textSize="16sp"></TextView>
                     <TextView
                         android:id="@+id/txt_soebandi"
