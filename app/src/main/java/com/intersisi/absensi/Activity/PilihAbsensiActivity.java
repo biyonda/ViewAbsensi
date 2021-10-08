@@ -27,6 +27,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.intersisi.absensi.Api.Api;
 import com.intersisi.absensi.Api.RetrofitClient;
 import com.intersisi.absensi.Helpers.ApiError;
@@ -61,7 +67,11 @@ public class PilihAbsensiActivity extends AppCompatActivity {
     Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
     Call<BaseResponse> absenWajah;
 
-    String jam_masuk, jam_kerja_id;
+    String jam_kerja_id, tipe;
+
+    String latitude = "0";
+    String longitude = "0";
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +88,9 @@ public class PilihAbsensiActivity extends AppCompatActivity {
 
         session = new Session(PilihAbsensiActivity.this);
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(PilihAbsensiActivity.this);
 
+        tipe = getIntent().getStringExtra("tipe");
         jadwalHariIni(session.getNip());
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +103,13 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         btn_absen_wajah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ){
+                    getCurrentLocation();
+                } else {
+                    ActivityCompat.requestPermissions(PilihAbsensiActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 105);
+                }
+
                 try {
                     if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
                         Intent intent = new Intent();
@@ -122,7 +141,13 @@ public class PilihAbsensiActivity extends AppCompatActivity {
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, 102);
         } else {
-            Toast.makeText(PilihAbsensiActivity.this, "Butuh .", Toast.LENGTH_SHORT);
+            Toast.makeText(PilihAbsensiActivity.this, "Butuh akses kamera.", Toast.LENGTH_SHORT);
+        }
+
+        if (requestCode == 105 && grantResults.length > 0 && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)){
+            getCurrentLocation();
+        } else {
+            Toast.makeText(PilihAbsensiActivity.this, "Butuh akses lokasi.", Toast.LENGTH_SHORT);
         }
     }
 
@@ -132,21 +157,35 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         if(requestCode == 102){
             if(resultCode == RESULT_OK){
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
-                String kehadiran;
-                if (checktimings(dateFormat1.format(date), jam_masuk)) {
-                    kehadiran = "masuk";
+                int sts = 0;
+                if (tipe.equals("masuk")) {
+                    sts = 1;
                 } else {
-                    kehadiran = "telat";
+                    sts = 2;
                 }
+
+                absenWajah = api.absenWajah(sts+"", jam_kerja_id+"", latitude, longitude, imageToString(photo));
+                absenWajah.enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        if (response.isSuccessful()) {
+                            Intent intent = new Intent(PilihAbsensiActivity.this, AbsensiBerhasilActivity.class);
+                            intent.putExtra("tipe", tipe);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            ApiError apiError = ErrorUtils.parseError(response);
+                            Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        Toast.makeText(PilihAbsensiActivity.this, "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
-    }
-
-    private String imageToString(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte[] imgBytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imgBytes, Base64.DEFAULT);
     }
 
     public void jadwalHariIni(String nip) {
@@ -155,10 +194,9 @@ public class PilihAbsensiActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
                 if (response.isSuccessful()) {
-                    jam_masuk = response.body().getData().get(0).getSampaiMasuk();
                     jam_kerja_id = response.body().getData().get(0).getJamKerjaId();
                 } else {
-                    jam_masuk = "";
+                    jam_kerja_id = "";
                     ApiError apiError = ErrorUtils.parseError(response);
                     Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -166,10 +204,55 @@ public class PilihAbsensiActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
-                jam_masuk = "";
+                jam_kerja_id = "";
                 Toast.makeText(PilihAbsensiActivity.this, "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getCurrentLocation() {
+        LocationManager locationManager = (LocationManager) PilihAbsensiActivity.this.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    final Location location = task.getResult();
+                    if (location != null){
+                        latitude = String.valueOf(location.getLatitude());
+                        longitude = String.valueOf(location.getLongitude());
+                    } else {
+                        LocationRequest locationRequest = new LocationRequest()
+                                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                                .setInterval(10000)
+                                .setFastestInterval(1000)
+                                .setNumUpdates(1);
+
+                        LocationCallback locationCallback = new LocationCallback(){
+                            @Override
+                            public void onLocationResult(LocationResult locationResult) {
+                                super.onLocationResult(locationResult);
+                                Location location1 = locationResult.getLastLocation();
+                                latitude = String.valueOf(location1.getLatitude());
+                                longitude = String.valueOf(location1.getLongitude());
+                            }
+                        };
+                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                    }
+                    System.out.println(latitude+", "+longitude);
+                }
+            });
+        } else {
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
+    }
+
+    private String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] imgBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgBytes, Base64.DEFAULT);
     }
 
     private boolean checktimings(String time, String endtime) {

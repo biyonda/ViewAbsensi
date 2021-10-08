@@ -34,6 +34,7 @@
             android:textColor="@color/green_dark">
         </TextView>
         <TextView
+            android:id="@+id/tipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="datang"
@@ -68,6 +69,7 @@
         android:paddingVertical="8dp"
         android:gravity="center">
         <TextView
+            android:id="@+id/jam_absen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="08:00"

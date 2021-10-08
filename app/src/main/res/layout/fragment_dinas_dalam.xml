@@ -119,7 +119,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/btn_pilih_absensi"
+            android:id="@+id/btn_absen_masuk"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="@drawable/bt_absen_datang"
@@ -156,7 +156,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_absen_wajah"
+            android:id="@+id/btn_absen_pulang"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="16dp"
