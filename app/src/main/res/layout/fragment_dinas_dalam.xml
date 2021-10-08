@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".Activity.DinasDalamFragment">
+    tools:context=".DinasDalamFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -18,70 +18,95 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data Absensi Hari Ini : "
-                android:textColor="@color/green_primary"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:background="@drawable/bg_green_round"
-                android:padding="8dp">
-            </TextView>
+            android:weightSum="10"
+            android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6.5"
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tanggal Kehadiran : ">
-                </TextView>
-                <TextView
-                    android:id="@+id/tgl_hadir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
+                    android:text="Data Absensi Hari Ini : "
+                    android:textColor="@color/green_primary"
                     android:textStyle="bold"
-                    android:textColor="@color/black">
+                    android:textSize="16dp"
+                    android:background="@drawable/bg_green_round"
+                    android:padding="8dp">
                 </TextView>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal Kehadiran : ">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/tgl_hadir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Absen Masuk : ">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/absen_masuk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Absen Pulang : ">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/absen_pulang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textStyle="bold"
+                        android:textColor="@color/black">
+                    </TextView>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-                <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                android:gravity="center"
+                android:orientation="vertical">
+                <AnalogClock
+                    android:layout_width="80dp"
+                    android:layout_height="80dp">
+                </AnalogClock>
+                <TextClock
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Absen Masuk : ">
-                </TextView>
-                <TextView
-                    android:id="@+id/absen_masuk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:textColor="@color/black">
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Absen Pulang : ">
-                </TextView>
-                <TextView
-                    android:id="@+id/absen_pulang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:textColor="@color/black">
-                </TextView>
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextClock>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -92,54 +117,57 @@
         android:paddingHorizontal="16sp"
         android:layout_marginTop="16dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/btn_pilih_absensi"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:visibility="visible"
-            android:background="@drawable/bt_white_round">
+            android:background="@drawable/bt_absen_datang"
+            android:visibility="visible">
+
             <ImageView
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/absensi_ic_datang">
-            </ImageView>
+                android:background="@drawable/absensi_ic_datang2"></ImageView>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Absen Datang"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/green_dark">
-                </TextView>
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pilih untuk absen datang"
-                    android:textColor="#AAA">
-                </TextView>
+                    android:textColor="@color/white"></TextView>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/btn_absen_wajah"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
             android:visibility="visible"
-            android:background="@drawable/bt_white_round">
+            android:background="@drawable/bt_absen_pulang">
             <ImageView
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/absensi_ic_pulang">
+                android:background="@drawable/absensi_ic_pulang2">
             </ImageView>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -151,15 +179,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Absen Pulang"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/green_dark">
+                    android:textColor="@color/white">
                 </TextView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pilih untuk absen pulang"
-                    android:textColor="#AAA">
+                    android:textColor="@color/white">
                 </TextView>
             </LinearLayout>
         </LinearLayout>
