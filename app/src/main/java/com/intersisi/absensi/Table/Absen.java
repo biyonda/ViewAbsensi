@@ -35,6 +35,9 @@ public class Absen {
     @SerializedName("foto_wajah")
     @Expose
     private String fotoWajah;
+    @SerializedName("dinas_luar")
+    @Expose
+    private String dinasLuar;
 
     public Integer getAttId() {
         return attId;
@@ -114,6 +117,14 @@ public class Absen {
 
     public void setFotoWajah(String fotoWajah) {
         this.fotoWajah = fotoWajah;
+    }
+
+    public String getDinasLuar() {
+        return dinasLuar;
+    }
+
+    public void setDinasLuar(String dinasLuar) {
+        this.dinasLuar = dinasLuar;
     }
 
 }

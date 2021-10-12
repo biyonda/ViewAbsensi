@@ -40,6 +40,7 @@ public interface Api {
             @Field("jam_kerja_id") String jam_kerja_id,
             @Field("lat") String lat,
             @Field("lng") String lng,
-            @Field("gambar") String gambar
+            @Field("gambar") String gambar,
+            @Field("dinas_luar") String dinas_luar
     );
 }

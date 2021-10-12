@@ -61,6 +61,7 @@ public class DinasDalamFragment extends Fragment {
     Call<BaseResponse<Absen>> absenPulang;
     Boolean sts_masuk = false;
     Boolean sts_pulang = false;
+    Boolean sts_dinas_luar = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,8 +85,16 @@ public class DinasDalamFragment extends Fragment {
             @Override
             public void onResponse(Call<BaseResponse<Absen>> call, Response<BaseResponse<Absen>> response) {
                 if (response.isSuccessful()) {
-                    sts_masuk = true;
-                    absen_masuk.setText(response.body().getData().get(0).getScanDate().substring(11));
+                    if (response.body().getData().get(0).getDinasLuar().equals("1")) {
+                        sts_dinas_luar = true;
+                        sts_masuk = true;
+                        sts_pulang = true;
+                        absen_masuk.setText("Dinas Luar");
+                        absen_pulang.setText("Dinas Luar");
+                    } else {
+                        sts_masuk = true;
+                        absen_masuk.setText(response.body().getData().get(0).getScanDate().substring(11));
+                    }
                 } else {
                     sts_masuk = false;
                     absen_masuk.setText("-");
@@ -102,28 +111,32 @@ public class DinasDalamFragment extends Fragment {
             }
         });
 
-        absenMasuk = api.getAbsen("2");
-        absenMasuk.enqueue(new Callback<BaseResponse<Absen>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<Absen>> call, Response<BaseResponse<Absen>> response) {
-                if (response.isSuccessful()) {
-                    sts_pulang = true;
-                    absen_pulang.setText(response.body().getData().get(0).getScanDate().substring(11));
-                } else {
+        if (sts_dinas_luar) {
+
+        } else {
+            absenMasuk = api.getAbsen("2");
+            absenMasuk.enqueue(new Callback<BaseResponse<Absen>>() {
+                @Override
+                public void onResponse(Call<BaseResponse<Absen>> call, Response<BaseResponse<Absen>> response) {
+                    if (response.isSuccessful()) {
+                        sts_pulang = true;
+                        absen_pulang.setText(response.body().getData().get(0).getScanDate().substring(11));
+                    } else {
+                        sts_pulang = false;
+                        absen_pulang.setText("-");
+                        ApiError apiError = ErrorUtils.parseError(response);
+                        Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse<Absen>> call, Throwable t) {
                     sts_pulang = false;
                     absen_pulang.setText("-");
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<Absen>> call, Throwable t) {
-                sts_pulang = false;
-                absen_pulang.setText("-");
-                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
 
         btn_absen_masuk.setOnClickListener(new View.OnClickListener() {
             @Override

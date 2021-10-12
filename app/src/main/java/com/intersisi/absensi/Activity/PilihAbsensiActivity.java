@@ -103,23 +103,27 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         btn_absen_wajah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ){
-                    getCurrentLocation();
+                if (jam_kerja_id.equals("")) {
+                    Toast.makeText(PilihAbsensiActivity.this, "Anda tidak ada jadwal hari ini", Toast.LENGTH_SHORT).show();
                 } else {
-                    ActivityCompat.requestPermissions(PilihAbsensiActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 105);
-                }
-
-                try {
-                    if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                        Intent intent = new Intent();
-                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 102);
+                    if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ){
+                        getCurrentLocation();
                     } else {
-                        ActivityCompat.requestPermissions(PilihAbsensiActivity.this,new String[]{Manifest.permission.CAMERA}, 100);
+                        ActivityCompat.requestPermissions(PilihAbsensiActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 105);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                    try {
+                        if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                            Intent intent = new Intent();
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, 102);
+                        } else {
+                            ActivityCompat.requestPermissions(PilihAbsensiActivity.this,new String[]{Manifest.permission.CAMERA}, 100);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -164,7 +168,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                     sts = 2;
                 }
 
-                absenWajah = api.absenWajah(sts+"", jam_kerja_id+"", latitude, longitude, imageToString(photo));
+                absenWajah = api.absenWajah(sts+"", jam_kerja_id+"", latitude, longitude, imageToString(photo), "");
                 absenWajah.enqueue(new Callback<BaseResponse>() {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {

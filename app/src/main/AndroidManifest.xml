@@ -24,6 +24,9 @@
         android:theme="@style/Theme.ViewAbsensi"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM" />
         <activity
             android:name=".Activity.AbsenWajah"
             android:exported="true" />
