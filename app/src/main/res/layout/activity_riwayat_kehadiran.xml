@@ -70,7 +70,7 @@
                         android:text="Tanggal Awal :"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/green_dark">
+                        android:textColor="#008E3E">
                     </TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -109,7 +109,7 @@
                         android:text="Tanggal Akhir :"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/green_dark">
+                        android:textColor="#008E3E">
                     </TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -140,49 +140,28 @@
                 android:textAllCaps="false">
             </Button>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="16sp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:weightSum="4">-->
-<!--                <TextView-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:text="Tanggal">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Jam Masuk"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/black">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Jam Keluar"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/black">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Keterangan"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/black">-->
-<!--                </TextView>-->
-<!--            </LinearLayout>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:text="Data Riwayat Kehadiran"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+                <ListView
+                    android:id="@+id/lv_riwayat_kehadiran"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    tools:listitem="@layout/adapter_riwayat_kehadiran">
+                </ListView>
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
