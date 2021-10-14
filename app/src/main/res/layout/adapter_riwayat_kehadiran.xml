@@ -1,153 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginTop="4dp">
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="70dp">
 
-            <ImageView
-                android:id="@+id/ic_top"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/ic_verified">
-            </ImageView>
+        <ImageView
+            android:id="@+id/img_absen"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:background="#EAEAEA">
+        </ImageView>
 
-            <TextView
-                android:id="@+id/tx_tgl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@+id/ic_top"
-                android:text="Tanggal : "
-                android:textColor="@color/black"
-                android:textStyle="bold"></TextView>
-
-            <TextView
-                android:id="@+id/tgl_kehadiran"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_toRightOf="@+id/tx_tgl"
-                android:background="@drawable/bg_green_round"
-                android:text="2021-10-13"
-                android:textColor="#008E3E"
-                android:textStyle="bold"></TextView>
-
+        <LinearLayout
+            android:id="@+id/ly_absen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/img_absen"
+            android:orientation="vertical">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_below="@id/ic_top"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="10dp">
-                <LinearLayout
-                    android:id="@+id/ly_ket_absen"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:background="@drawable/bg_green_round">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/absen_ic_qrcode">
-                    </ImageView>
-                </LinearLayout>
-                <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Jam Masuk : ">
-                        </TextView>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="07:18"
-                            android:textStyle="bold"
-                            android:textColor="#1656D7">
-                        </TextView>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Jam Pulang : ">
-                        </TextView>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="15:41"
-                            android:textStyle="bold"
-                            android:textColor="#E95557">
-                        </TextView>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Keterangan : ">
-                        </TextView>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sakit">
-                        </TextView>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp"
-                    android:gravity="center_vertical|end">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Lokasi Absensi">
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RSD Dr. Soebandi"
-                        android:textStyle="bold"
-                        android:textColor="#008E3E">
-                    </TextView>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal : ">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2021-10-14"
+                    android:textColor="#4D8CD9"
+                    android:textStyle="bold">
+                </TextView>
             </LinearLayout>
-
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="24dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jam Absensi : ">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="17:41"
+                    android:textColor="#00B04E"
+                    android:textStyle="bold">
+                </TextView>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Keterangan : ">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-">
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/ly_ket"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/bg_green_round">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="ABSEN MASUK"
+                android:textColor="#00B04E"
+                android:textStyle="bold"
+                android:textAlignment="center">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EAEAEA"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="16dp">
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <ImageView
+            android:id="@+id/img_absen"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:background="#EAEAEA">
+        </ImageView>
+
+        <LinearLayout
+            android:id="@+id/ly_absen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/img_absen"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal : ">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2021-10-14"
+                    android:textColor="#4D8CD9"
+                    android:textStyle="bold">
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jam Absensi : ">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="17:41"
+                    android:textColor="#E95557"
+                    android:textStyle="bold">
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Keterangan : ">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-">
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ly_ket"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/bt_red_round">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="ABSEN PULANG"
+                android:textColor="#E95557"
+                android:textStyle="bold"
+                android:textAlignment="center">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EAEAEA"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="16dp">
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
