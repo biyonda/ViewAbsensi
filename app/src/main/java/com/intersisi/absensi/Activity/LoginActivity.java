@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Api api;
     Session session;
     Call<UserResponse> login;
+    String imei = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,20 @@ public class LoginActivity extends AppCompatActivity {
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
         } else {
-            //TODO
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                imei = Settings.Secure.getString(
+                        context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            } else {
+                if (telephonyManager.getDeviceId() != null) {
+                    imei = telephonyManager.getDeviceId();
+                } else {
+                    imei = Settings.Secure.getString(
+                            context.getContentResolver(),
+                            Settings.Secure.ANDROID_ID);
+                }
+            }
         }
-        String imei = telephonyManager.getDeviceId();
 
         session = new Session(this);
         api = RetrofitClient.createService(Api.class);

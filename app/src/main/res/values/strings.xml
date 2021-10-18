@@ -39,7 +39,7 @@
         <item>Pilih Izin</item>
         <item>Sakit</item>
         <item>Cuti</item>
-        <item>Dinas Luar</item>
+        <!--        <item>Dinas Luar</item>-->
     </string-array>
 
 </resources>

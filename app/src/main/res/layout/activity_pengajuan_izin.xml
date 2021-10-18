@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jenis Cuti :"
+                android:text="Jenis Cuti"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/green_dark">
@@ -61,15 +61,27 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6.5"
-            android:layout_marginLeft="8dp"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/green_dark">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6.3"
             android:background="@drawable/bt_white_round"
             android:gravity="center_vertical|start">
             <Spinner
                 android:id="@+id/cuti_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </Spinner>
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -87,7 +99,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tanggal Mulai :"
+                android:text="Tanggal Mulai"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/green_dark">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/green_dark">
@@ -97,8 +123,7 @@
             android:id="@+id/select_tgl_awal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6.5"
-            android:layout_marginLeft="8dp"
+            android:layout_weight="6.3"
             android:background="@drawable/bt_white_round"
             android:gravity="center_vertical|start">
             <TextView
@@ -126,7 +151,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tanggal Selesai :"
+                android:text="Tanggal Selesai"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/green_dark">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/green_dark">
@@ -137,8 +176,7 @@
             android:id="@+id/select_tgl_akhir"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="6.5"
+            android:layout_weight="6.3"
             android:background="@drawable/bt_white_round"
             android:gravity="center_vertical|start">
             <TextView
@@ -157,7 +195,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="Keterangan Izin : "
+        android:text="Keterangan Izin \t\t\t\t : "
         android:textStyle="bold"
         android:textColor="@color/green_dark">
     </TextView>
@@ -177,8 +215,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:background="null"
-                android:hint="Iulis keterangan izin disini ....">
+                android:background="#fff"
+                android:hint="Tulis keterangan izin disini ....">
             </EditText>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -214,6 +252,27 @@
             android:textAllCaps="false"
             android:textAlignment="center">
         </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6.3"
+            android:background="@drawable/bt_white_round"
+            android:gravity="center_vertical|start">
+            <TextView
+                android:id="@+id/nama_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="16dp">
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
 
     <TextView

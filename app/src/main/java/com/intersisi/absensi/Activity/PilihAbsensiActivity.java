@@ -66,6 +66,8 @@ public class PilihAbsensiActivity extends AppCompatActivity {
     Api api;
     Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
     Call<BaseResponse> absenWajah;
+    Call<BaseResponse> absenScanQr;
+    Call<BaseResponse> cekQr;
 
     String jam_kerja_id, tipe;
 
@@ -131,8 +133,8 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         btn_qr_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PilihAbsensiActivity.this, AbsensiGagalActivity.class);
-                startActivity(intent);
+                Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
+                startActivityForResult(i,1);
             }
         });
     }
@@ -177,6 +179,52 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                             intent.putExtra("tipe", tipe);
                             startActivity(intent);
                             finish();
+                        } else {
+                            ApiError apiError = ErrorUtils.parseError(response);
+                            Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        Toast.makeText(PilihAbsensiActivity.this, "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        } else if (requestCode == 1) {
+            if (resultCode == 101) {
+//                Toast.makeText(PilihAbsensiActivity.this, data.getExtras().get("content").toString(), Toast.LENGTH_SHORT).show();
+                cekQr = api.cekQr(data.getExtras().get("content").toString());
+                cekQr.enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        if (response.isSuccessful()) {
+                            int sts = 0;
+                            if (tipe.equals("masuk")) {
+                                sts = 1;
+                            } else {
+                                sts = 2;
+                            }
+                            absenScanQr = api.absenScanQr(sts+"", jam_kerja_id+"", latitude, longitude, "");
+                            absenScanQr.enqueue(new Callback<BaseResponse>() {
+                                @Override
+                                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        Intent intent = new Intent(PilihAbsensiActivity.this, AbsensiBerhasilActivity.class);
+                                        intent.putExtra("tipe", tipe);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        ApiError apiError = ErrorUtils.parseError(response);
+                                        Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                    Toast.makeText(PilihAbsensiActivity.this, "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         } else {
                             ApiError apiError = ErrorUtils.parseError(response);
                             Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();

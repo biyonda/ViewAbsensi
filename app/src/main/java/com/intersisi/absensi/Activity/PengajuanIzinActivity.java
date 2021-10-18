@@ -1,10 +1,15 @@
 package com.intersisi.absensi.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,16 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.intersisi.absensi.Helpers.ImageFilePath;
 import com.intersisi.absensi.R;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class PengajuanIzinActivity extends AppCompatActivity {
 
+    private static final String TAG = "TAG";
     ImageView btn_back;
     Spinner cuti_spinner;
     LinearLayout select_tgl_awal,select_tgl_akhir;
-    TextView tgl_awal, tgl_akhir;
+    TextView tgl_awal, tgl_akhir, nama_file;
     Button btn_simpan, btn_browse;
 
     final Calendar calendar = Calendar.getInstance();
@@ -31,7 +39,7 @@ public class PengajuanIzinActivity extends AppCompatActivity {
     int mm = calendar.get(Calendar.MONTH);
     int dd = calendar.get(Calendar.DAY_OF_MONTH);
 
-    private static int RESULT_LOAD_IMAGE = 1;
+    private static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +51,10 @@ public class PengajuanIzinActivity extends AppCompatActivity {
         select_tgl_akhir = findViewById(R.id.select_tgl_akhir);
         tgl_awal = findViewById(R.id.tgl_awal);
         tgl_akhir = findViewById(R.id.tgl_akhir);
+        nama_file = findViewById(R.id.nama_file);
         btn_browse = findViewById(R.id.btn_browse);
         btn_simpan = findViewById(R.id.btn_simpan);
+        cuti_spinner = findViewById(R.id.cuti_spinner);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +102,31 @@ public class PengajuanIzinActivity extends AppCompatActivity {
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                startActivityForResult(i, REQUEST_CODE);
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                Uri uri = data.getData();
+
+
+                String realPath = ImageFilePath.getPath(PengajuanIzinActivity.this, data.getData());
+//                realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
+                nama_file.setText(realPath);
+                Log.i(TAG, "onActivityResult: file path : " + realPath);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    // Log.d(TAG, String.valueOf(bitmap));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

@@ -110,26 +110,32 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
             public void onResponse(Call<BaseResponse<Absen>> call, Response<BaseResponse<Absen>> response) {
                 if (response.isSuccessful()) {
                     sts_masuk = true;
-                    latitude = Double.parseDouble(response.body().getData().get(0).getLat());
-                    longitude = Double.parseDouble(response.body().getData().get(0).getLng());
-                    jam_absen.setText(response.body().getData().get(0).getScanDate().substring(11));
-                    lokasi.setText("Lokasi");
-                    koordinat.setText(latitude+", "+longitude);
+                    if (response.body().getData().get(0).getDinasLuar().equals("1")) {
+                        latitude = Double.parseDouble(response.body().getData().get(0).getLat());
+                        longitude = Double.parseDouble(response.body().getData().get(0).getLng());
+                        jam_absen.setText(response.body().getData().get(0).getScanDate().substring(11));
+                        lokasi.setText("Lokasi");
+                        koordinat.setText(latitude+", "+longitude);
 
-                    RequestOptions requestOptions = new RequestOptions();
-                    requestOptions.signature(
-                            new ObjectKey(String.valueOf(System.currentTimeMillis())));
-                    Glide.with(getContext())
-                            .setDefaultRequestOptions(requestOptions)
-                            .load("http://" + session.getBaseUrl() + "/storage/images/" + response.body().getData().get(0).getFotoWajah())
-                            .into(gambar);
+                        RequestOptions requestOptions = new RequestOptions();
+                        requestOptions.signature(
+                                new ObjectKey(String.valueOf(System.currentTimeMillis())));
+                        Glide.with(getContext())
+                                .setDefaultRequestOptions(requestOptions)
+                                .load("http://" + session.getBaseUrl() + "/storage/images/" + response.body().getData().get(0).getFotoWajah())
+                                .into(gambar);
 
-                    mMap.clear();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15.0f));
-                    mMap.addMarker(new MarkerOptions()
-                            .title("Lokasi Saat Ini")
-                            .position(new LatLng(latitude, longitude))
-                            .snippet("......"));
+                        mMap.clear();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15.0f));
+                        mMap.addMarker(new MarkerOptions()
+                                .title("Lokasi Saat Ini")
+                                .position(new LatLng(latitude, longitude))
+                                .snippet("......"));
+                    } else {
+                        jam_absen.setText("-");
+                        lokasi.setText("-");
+                        koordinat.setText("-");
+                    }
                 } else {
                     sts_masuk = false;
                     jam_absen.setText("-");

@@ -43,9 +43,12 @@ public class AbsensiBerhasilActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("tipe").equals("masuk")) {
             tipe.setText("DATANG");
             getAbsen("1");
-        } else {
+        } else if (getIntent().getStringExtra("tipe").equals("pulang")) {
             tipe.setText("PULANG");
             getAbsen("2");
+        } else {
+            tipe.setText("Dinas Luar");
+            getAbsen("1");
         }
 
         btn_home.setOnClickListener(new View.OnClickListener() {
