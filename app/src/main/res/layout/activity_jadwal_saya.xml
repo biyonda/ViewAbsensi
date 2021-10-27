@@ -45,43 +45,44 @@
         android:layout_gravity="center">
     </TextView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:weightSum="2">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bt_white_round">
-            <Spinner
-                android:id="@+id/bln_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </Spinner>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/bt_white_round">
-            <Spinner
-                android:id="@+id/thn_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </Spinner>
-        </LinearLayout>
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginHorizontal="16dp"-->
+<!--        android:weightSum="2">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/bt_white_round">-->
+<!--            <Spinner-->
+<!--                android:id="@+id/bln_spinner"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+<!--            </Spinner>-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:background="@drawable/bt_white_round">-->
+<!--            <Spinner-->
+<!--                android:id="@+id/thn_spinner"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+<!--            </Spinner>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
 
     <Button
+        android:id="@+id/lihat_jadwal"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="Simpan"
+        android:text="Lihat Jadwal"
         android:textAllCaps="false">
     </Button>
 
@@ -93,11 +94,28 @@
         android:padding="5dp"
         app:cardElevation="4dp"
         app:cardCornerRadius="10dp">
-        <CalendarView
-            android:id="@+id/calendar_view"
+<!--        <CalendarView-->
+<!--            android:id="@+id/calendar_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+<!--        </CalendarView>-->
+        <RelativeLayout
+            android:id="@+id/progress"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+        <com.github.ik024.calendar_lib.custom.MonthView
+            android:id="@+id/jadwal_saya"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </CalendarView>
+
+        </com.github.ik024.calendar_lib.custom.MonthView>
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

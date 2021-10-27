@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ import com.intersisi.absensi.R;
 import com.intersisi.absensi.Response.BaseResponse;
 import com.intersisi.absensi.Session.Session;
 import com.intersisi.absensi.Table.JadwalHariIni;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,7 +108,16 @@ public class BerandaFragment extends Fragment {
             @Override
             public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
                 if (response.isSuccessful()) {
-                    shift_pengguna.setText("Kelompok Shift : "+response.body().getData().get(0).getNama());
+                    ArrayList<String> jadwalku = new ArrayList<>();
+                    jadwalku.clear();
+
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        jadwalku.add(response.body().getData().get(i).getNama());
+                    }
+
+                    Collections.reverse(jadwalku);
+                    shift_pengguna.setText("Kelompok Shift : "+ TextUtils.join(", ", jadwalku));
+
                 } else {
                     shift_pengguna.setText("Kelompok Shift : -");
                     ApiError apiError = ErrorUtils.parseError(response);

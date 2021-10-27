@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ import com.intersisi.absensi.R;
 import com.intersisi.absensi.Response.BaseResponse;
 import com.intersisi.absensi.Session.Session;
 import com.intersisi.absensi.Table.Absen;
+import com.intersisi.absensi.Table.JadwalHariIni;
+import com.intersisi.absensi.Table.Jarak;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,9 +62,12 @@ public class DinasDalamFragment extends Fragment {
     Call<BaseResponse<Absen>> dataAbsen;
     Call<BaseResponse<Absen>> absenMasuk;
     Call<BaseResponse<Absen>> absenPulang;
+    Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
+    Call<BaseResponse<Jarak>> getJarak;
     Boolean sts_masuk = false;
     Boolean sts_pulang = false;
     Boolean sts_dinas_luar = false;
+    Boolean sts_jadwal = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +85,7 @@ public class DinasDalamFragment extends Fragment {
 
         session = new Session(getContext());
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
+        jadwalHariIni(session.getNip());
 
         absenMasuk = api.getAbsen("1");
         absenMasuk.enqueue(new Callback<BaseResponse<Absen>>() {
@@ -99,7 +106,8 @@ public class DinasDalamFragment extends Fragment {
                     sts_masuk = false;
                     absen_masuk.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
-                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("TAG", "onResponse: "+apiError.getMessage());
                 }
             }
 
@@ -107,7 +115,8 @@ public class DinasDalamFragment extends Fragment {
             public void onFailure(Call<BaseResponse<Absen>> call, Throwable t) {
                 sts_masuk = false;
                 absen_masuk.setText("-");
-                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "onResponse: "+t.getMessage());
             }
         });
 
@@ -141,12 +150,17 @@ public class DinasDalamFragment extends Fragment {
         btn_absen_masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sts_masuk) {
-                    Toast.makeText(getContext(), "Anda telah absen masuk", Toast.LENGTH_SHORT).show();
+                if (sts_jadwal == false) {
+                    Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                    it.putExtra("tipe", "masuk");
-                    startActivity(it);
+
+                    if (sts_masuk) {
+                        Toast.makeText(getContext(), "Anda telah absen masuk", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                        it.putExtra("tipe", "masuk");
+                        startActivity(it);
+                    }
                 }
             }
         });
@@ -154,16 +168,42 @@ public class DinasDalamFragment extends Fragment {
         btn_absen_pulang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sts_pulang) {
-                    Toast.makeText(getContext(), "Anda telah absen pulang", Toast.LENGTH_SHORT).show();
+                if (sts_jadwal == false) {
+                    Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                    it.putExtra("tipe", "pulang");
-                    startActivity(it);
+                    if (sts_pulang) {
+                        Toast.makeText(getContext(), "Anda telah absen pulang", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                        it.putExtra("tipe", "pulang");
+                        startActivity(it);
+                    }
                 }
             }
         });
 
         return view;
+    }
+
+    public void jadwalHariIni(String nip) {
+        getJadwalHariIni = api.getJadwalHariIni(session.getNip());
+        getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
+                if (response.isSuccessful()) {
+                    sts_jadwal = true;
+                } else {
+                    sts_jadwal = false;
+                    ApiError apiError = ErrorUtils.parseError(response);
+                    Log.d("TAG", "onResponse: "+apiError.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
+                sts_jadwal = false;
+                Log.d("TAG", "onResponse: "+t.getMessage());
+            }
+        });
     }
 }

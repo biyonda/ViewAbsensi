@@ -27,8 +27,16 @@ public class Session {
         editor.commit();
     }
 
+    public String getLat() {
+        return preferences.getString("lat", "-8.1520446");
+    }
+
+    public String getLng() {
+        return preferences.getString("lng", "113.7137827");
+    }
+
     public String getBaseUrl() {
-        return preferences.getString("baseUrl", "jaringan.my.id:8000");
+        return preferences.getString("baseUrl", "http://api.pdesoebandi.id");
     }
 
     public boolean getUserLoggedIn() {
