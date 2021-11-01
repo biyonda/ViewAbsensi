@@ -44,16 +44,16 @@
                         android:text="Selamat datang di"
                         android:textColor="@color/white"
                         android:textSize="16sp"></TextView>
+
                     <TextView
                         android:id="@+id/txt_soebandi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Aplikasi Soebandi E-Absensi"
+                        android:layout_below="@+id/txt_welcome"
+                        android:text="Soebandi E-Presensi App"
                         android:textColor="#FFF"
-                        android:textStyle="bold"
                         android:textSize="16sp"
-                        android:layout_below="@+id/txt_welcome">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
                 </RelativeLayout>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/section"
@@ -82,7 +82,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
                             android:layout_toRightOf="@+id/img_profil"
-                            android:text="Dheta Indra Edwina Elviera, S.Kom"
+                            android:text="nama_user"
                             android:textColor="@color/green_dark"
                             android:textSize="16sp"
                             android:textStyle="bold"></TextView>
@@ -94,7 +94,7 @@
                             android:layout_below="@+id/nama_pengguna"
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/img_profil"
-                            android:text="123456789101112"
+                            android:text="no_pegawai"
                             android:textColor="@color/black"
                             android:textSize="13sp"></TextView>
 
@@ -105,7 +105,7 @@
                             android:layout_below="@+id/nip_pengguna"
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/img_profil"
-                            android:text="Staff PDE"
+                            android:text="jabatan"
                             android:textSize="13sp"></TextView>
 
                         <TextView
@@ -115,7 +115,7 @@
                             android:layout_below="@+id/jabatan_pengguna"
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/img_profil"
-                            android:text="Kelompok Shift : A"
+                            android:text="Kelompok Shift :"
                             android:textColor="#FCBD01"
                             android:textStyle="bold"></TextView>
                     </RelativeLayout>

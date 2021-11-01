@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selamat"
+        android:text="Berhasil"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/green_dark">
@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="anda berhasil absen : "
+            android:text="presensi "
             android:textSize="18sp"
             android:textColor="@color/green_dark">
         </TextView>
@@ -37,9 +37,16 @@
             android:id="@+id/tipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="datang"
+            android:text=""
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@color/green_dark">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" anda telah tercatat"
+            android:textSize="18sp"
             android:textColor="@color/green_dark">
         </TextView>
     </LinearLayout>
@@ -56,7 +63,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Absen tercatat pada :"
+        android:text="Presensi tercatat pada :"
         android:textSize="16sp">
     </TextView>
 
@@ -72,7 +79,7 @@
             android:id="@+id/jam_absen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="08:00"
+            android:text=""
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#CE3032">

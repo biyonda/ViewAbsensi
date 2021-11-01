@@ -42,5 +42,12 @@
         <!--        <item>Dinas Luar</item>-->
     </string-array>
 
+    <string-array name="shift_array">
+        <item>Pilih Shift</item>
+        <item>Pagi</item>
+        <item>Sore</item>
+        <item>Malam</item>
+    </string-array>
+
 </resources>
 

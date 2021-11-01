@@ -61,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Absensi dengan memindai wajah"
+                android:text="Presensi dengan memindai wajah"
                 android:textColor="#AAA">
             </TextView>
         </LinearLayout>
@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Absen dengan pindai QR Code"
+                android:text="Presensi dengan pindai QR Code"
                 android:textColor="#AAA">
             </TextView>
         </LinearLayout>

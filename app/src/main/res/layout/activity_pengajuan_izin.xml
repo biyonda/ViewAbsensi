@@ -214,8 +214,8 @@
             <EditText
                 android:id="@+id/keterangan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:layout_height="match_parent"
+                android:textSize="13sp"
                 android:background="#fff"
                 android:hint="Tulis keterangan izin disini ....">
             </EditText>
