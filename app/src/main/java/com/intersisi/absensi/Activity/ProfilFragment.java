@@ -50,16 +50,18 @@ public class ProfilFragment extends Fragment {
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
 
         nama_pengguna = view.findViewById(R.id.nama_pengguna);
-        nama_pengguna.setText(session.getNama());
+        btn_edit = view.findViewById(R.id.btn_edit);
         no_pegawai = view.findViewById(R.id.no_pegawai);
-        no_pegawai.setText(session.getNip());
         jabatan_pengguna = view.findViewById(R.id.jabatan_pengguna);
-        jabatan_pengguna.setText(session.getNamaBagian());
         shift = view.findViewById(R.id.shift);
+        btn_logout = view.findViewById(R.id.btn_logout);
+
+        nama_pengguna.setText(session.getNama());
+        no_pegawai.setText(session.getNip());
+        jabatan_pengguna.setText(session.getNamaBagian());
 
         jadwalHariIni(session.getNip());
 
-        btn_edit = view.findViewById(R.id.btn_edit);
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +69,6 @@ public class ProfilFragment extends Fragment {
             }
         });
 
-        btn_logout = view.findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

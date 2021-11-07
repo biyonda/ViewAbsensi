@@ -85,4 +85,11 @@ public interface Api {
             @Query(value = "destinations", encoded = true) String destination,
             @Query("key") String api_key
     );
+
+    @FormUrlEncoded
+    @POST("ubahPassword")
+    Call<BaseResponse> ubahPassword(
+            @Field("nip") String nip,
+            @Field("password") String password
+    );
 }

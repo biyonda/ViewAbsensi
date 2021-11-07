@@ -22,12 +22,18 @@ import android.widget.Toast;
 
 import com.intersisi.absensi.Api.Api;
 import com.intersisi.absensi.Api.RetrofitClient;
+import com.intersisi.absensi.Helpers.ApiError;
+import com.intersisi.absensi.Helpers.ErrorUtils;
 import com.intersisi.absensi.R;
 import com.intersisi.absensi.Response.BaseResponse;
 import com.intersisi.absensi.Session.Session;
 import com.intersisi.absensi.Table.JadwalHariIni;
 
 import java.io.ByteArrayOutputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class EditProfilActivity extends AppCompatActivity {
@@ -39,40 +45,63 @@ public class EditProfilActivity extends AppCompatActivity {
     Session session;
     Api api;
 
+    String kataSandi;
+
+    Call<BaseResponse> ubahPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profil);
 
         btn_browse = findViewById(R.id.btn_browse);
+        btn_simpan = findViewById(R.id.btn_simpan);
         foto_pengguna = findViewById(R.id.foto_pengguna);
         password_pengguna = findViewById(R.id.password_pengguna);
 
         session = new Session(this);
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
 
-
-        btn_browse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    if (ActivityCompat.checkSelfPermission(EditProfilActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                        Intent intent = new Intent();
-                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 102);
-                    } else {
-                        ActivityCompat.requestPermissions(EditProfilActivity.this,new String[]{Manifest.permission.CAMERA}, 100);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        btn_browse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                try {
+//                    if (ActivityCompat.checkSelfPermission(EditProfilActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+//                        Intent intent = new Intent();
+//                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        startActivityForResult(intent, 102);
+//                    } else {
+//                        ActivityCompat.requestPermissions(EditProfilActivity.this,new String[]{Manifest.permission.CAMERA}, 100);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         btn_simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                kataSandi = password_pengguna.getText().toString();
+                ubahPassword = api.ubahPassword(session.getNip(), kataSandi);
+                ubahPassword.enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(EditProfilActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+                            finish();
+                        } else {
+                            ApiError apiError = ErrorUtils.parseError(response);
+                            Toast.makeText(EditProfilActivity.this, apiError.getMessage()+" Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        Toast.makeText(EditProfilActivity.this, t.getMessage()+" Error 1", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
