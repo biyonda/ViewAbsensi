@@ -40,7 +40,7 @@ public class EditProfilActivity extends AppCompatActivity {
 
     EditText password_pengguna;
     Button btn_browse, btn_simpan;
-    ImageView foto_pengguna;
+    ImageView btn_back, foto_pengguna;
 
     Session session;
     Api api;
@@ -56,6 +56,7 @@ public class EditProfilActivity extends AppCompatActivity {
 
         btn_browse = findViewById(R.id.btn_browse);
         btn_simpan = findViewById(R.id.btn_simpan);
+        btn_back = findViewById(R.id.btn_back);
         foto_pengguna = findViewById(R.id.foto_pengguna);
         password_pengguna = findViewById(R.id.password_pengguna);
 
@@ -78,6 +79,13 @@ public class EditProfilActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         btn_simpan.setOnClickListener(new View.OnClickListener() {
             @Override

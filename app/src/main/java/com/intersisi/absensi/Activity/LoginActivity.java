@@ -12,9 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -34,9 +37,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_READ_PHONE_STATE = 0;
     Button btn_login;
+    ImageView show_password;
     EditText nip, password;
     ProgressBar progress;
     Context context;
+    Boolean showPasswordClicked = false;
 
     Api api;
     Session session;
@@ -76,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.btn_login);
         progress = findViewById(R.id.progress);
+        show_password = findViewById(R.id.show_password);
         System.out.println(imei);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +118,30 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+
+        show_password.setBackgroundResource(R.drawable.ic_eye_open);
+        show_password.setOnClickListener(mToggleShowPasswordButton);
+
     }
+
+    View.OnClickListener mToggleShowPasswordButton = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View v){
+            // change your button background
+
+            if(showPasswordClicked){
+                v.setBackgroundResource(R.drawable.ic_eye_closed);
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }else{
+                v.setBackgroundResource(R.drawable.ic_eye_open);
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+
+            showPasswordClicked = !showPasswordClicked; // reverse
+        }
+
+    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
