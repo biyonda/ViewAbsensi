@@ -142,7 +142,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                     lokasi.setText("-");
                     koordinat.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
-                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -287,7 +287,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                 } else {
                     jam_kerja_id = "";
                     ApiError apiError = ErrorUtils.parseError(response);
-                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 

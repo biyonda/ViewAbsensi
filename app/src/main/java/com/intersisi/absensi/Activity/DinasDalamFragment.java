@@ -42,6 +42,7 @@ import com.intersisi.absensi.Table.JadwalHariIni;
 import com.intersisi.absensi.Table.Jarak;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -68,6 +69,9 @@ public class DinasDalamFragment extends Fragment {
     Boolean sts_pulang = false;
     Boolean sts_dinas_luar = false;
     Boolean sts_jadwal = false;
+
+    String jam_mulai_masuk, jam_sampai_masuk;
+    String jam_mulai_pulang, jam_sampai_pulang;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,7 +110,7 @@ public class DinasDalamFragment extends Fragment {
                     sts_masuk = false;
                     absen_masuk.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
-                    Log.d("TAG", "onResponse: "+apiError.getMessage());
+//                    Log.d("TAG", "onResponse: " + apiError.getMessage());
                 }
             }
 
@@ -114,7 +118,7 @@ public class DinasDalamFragment extends Fragment {
             public void onFailure(Call<BaseResponse<Absen>> call, Throwable t) {
                 sts_masuk = false;
                 absen_masuk.setText("-");
-                Log.d("TAG", "onResponse: "+t.getMessage());
+                Log.d("TAG", "onResponse: " + t.getMessage());
             }
         });
 
@@ -132,7 +136,7 @@ public class DinasDalamFragment extends Fragment {
                         sts_pulang = false;
                         absen_pulang.setText("-");
                         ApiError apiError = ErrorUtils.parseError(response);
-                        Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -140,7 +144,7 @@ public class DinasDalamFragment extends Fragment {
                 public void onFailure(Call<BaseResponse<Absen>> call, Throwable t) {
                     sts_pulang = false;
                     absen_pulang.setText("-");
-                    Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -154,9 +158,23 @@ public class DinasDalamFragment extends Fragment {
                     if (sts_masuk) {
                         Toast.makeText(getContext(), "Anda telah absen masuk", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                        it.putExtra("tipe", "masuk");
-                        startActivity(it);
+                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                        Date date = new Date();
+                        String jam_skrg = formatter.format(date);
+                        System.out.println(jam_skrg);
+                        System.out.println(jam_mulai_masuk);
+                        System.out.println(jam_sampai_masuk);
+                        if (cekAfter(jam_skrg, jam_mulai_masuk) && cekBefore(jam_skrg, jam_sampai_masuk)) {
+                            Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                            it.putExtra("tipe", "masuk");
+                            startActivity(it);
+                        } else {
+                            if (cekAfter(jam_skrg, jam_sampai_pulang)) {
+                                Toast.makeText(getContext(), "Waktu presensi telah habis !!!\nSilahkan hubungi operator untuk keterlambatan !!!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
             }
@@ -171,9 +189,19 @@ public class DinasDalamFragment extends Fragment {
                     if (sts_pulang) {
                         Toast.makeText(getContext(), "Anda telah absen pulang", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                        it.putExtra("tipe", "pulang");
-                        startActivity(it);
+                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                        Date date = new Date();
+                        String jam_skrg = formatter.format(date);
+                        System.out.println(jam_skrg);
+                        System.out.println(jam_mulai_pulang);
+                        System.out.println(jam_sampai_pulang);
+                        if (cekAfter(jam_skrg, jam_mulai_pulang) && cekBefore(jam_skrg, jam_sampai_pulang)) {
+                            Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                            it.putExtra("tipe", "pulang");
+                            startActivity(it);
+                        } else {
+                            Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -189,18 +217,62 @@ public class DinasDalamFragment extends Fragment {
             public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
                 if (response.isSuccessful()) {
                     sts_jadwal = true;
+                    jam_mulai_masuk = response.body().getData().get(0).getMulaiMasuk();
+                    jam_sampai_masuk = response.body().getData().get(0).getSampaiMasuk();
+                    jam_mulai_pulang = response.body().getData().get(0).getMulaiPulang();
+                    jam_sampai_pulang = response.body().getData().get(0).getSampaiPulang();
                 } else {
                     sts_jadwal = false;
                     ApiError apiError = ErrorUtils.parseError(response);
-                    Log.d("TAG", "onResponse: "+apiError.getMessage());
+                    Log.d("TAG", "onResponse: " + apiError.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
                 sts_jadwal = false;
-                Log.d("TAG", "onResponse: "+t.getMessage());
+                Log.d("TAG", "onResponse: " + t.getMessage());
             }
         });
+    }
+
+    private boolean cekBefore(String time, String endtime) {
+
+        String pattern = "H:m:s";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+        try {
+            Date date1 = sdf.parse(time);
+            Date date2 = sdf.parse(endtime);
+
+            if (date1.before(date2)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean cekAfter(String time, String endtime) {
+
+        String pattern = "H:m:s";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+        try {
+            Date date1 = sdf.parse(time);
+            Date date2 = sdf.parse(endtime);
+
+            if (date1.after(date2)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

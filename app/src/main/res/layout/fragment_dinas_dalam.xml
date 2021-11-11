@@ -42,7 +42,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tanggal Kehadiran : ">
+                        android:text="Tanggal Presensi : ">
                     </TextView>
                     <TextView
                         android:id="@+id/tgl_hadir"
@@ -60,7 +60,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Absen Masuk : ">
+                        android:text="Presensi Masuk : ">
                     </TextView>
                     <TextView
                         android:id="@+id/absen_masuk"
@@ -78,7 +78,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Absen Pulang : ">
+                        android:text="Presensi Pulang : ">
                     </TextView>
                     <TextView
                         android:id="@+id/absen_pulang"
@@ -150,7 +150,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pilih untuk absen datang"
+                    android:text="Pilih untuk presensi datang"
                     android:textColor="@color/white"></TextView>
             </LinearLayout>
         </LinearLayout>
@@ -178,7 +178,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Absen Pulang"
+                    android:text="Presensi Pulang"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/white">
@@ -186,7 +186,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pilih untuk absen pulang"
+                    android:text="Pilih untuk presensi pulang"
                     android:textColor="@color/white">
                 </TextView>
             </LinearLayout>

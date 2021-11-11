@@ -65,21 +65,23 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginHorizontal="16dp"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:paddingBottom="10dp"
                     android:weightSum="10">
                     <RelativeLayout
                         android:id="@+id/btn_voucher"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="4.5">
+                        android:layout_weight="4.75">
+
                         <TextView
                             android:id="@+id/tx_jabatan"
                             android:layout_width="wrap_content"
@@ -88,43 +90,40 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="Jabatan"
-                            android:textColor="@color/black">
-                        </TextView>
+                            android:textColor="@color/black"></TextView>
 
                         <ImageView
                             android:id="@+id/ic_jabatan"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_below="@id/tx_jabatan"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="6dp"
                             android:layout_marginEnd="6dp"
-                            android:background="@drawable/ic_verified">
-                        </ImageView>
+                            android:background="@drawable/ic_verified"></ImageView>
 
                         <TextView
                             android:id="@+id/jabatan_pengguna"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tx_jabatan"
                             android:layout_marginTop="6dp"
                             android:layout_toEndOf="@+id/ic_jabatan"
                             android:text=""
                             android:textColor="#FFDC45"
-                            android:textStyle="bold">
-                        </TextView>
+                            android:textStyle="bold"></TextView>
                     </RelativeLayout>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.4"
                         android:gravity="center">
                     </LinearLayout>
                     <RelativeLayout
                         android:id="@+id/btn_point"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="4.5">
+                        android:layout_weight="4.75">
 
                         <TextView
                             android:id="@+id/tx_shift"
@@ -134,29 +133,28 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="Kelompok Shift"
-                            android:textColor="@color/black">
-                        </TextView>
+                            android:textColor="@color/black"></TextView>
 
                         <ImageView
                             android:id="@+id/ic_shift"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_below="@id/tx_shift"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
                             android:layout_marginRight="6dp"
                             android:background="@drawable/ic_person_pin"></ImageView>
+
                         <TextView
                             android:id="@+id/shift"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tx_shift"
                             android:layout_marginTop="6dp"
                             android:layout_toEndOf="@+id/ic_shift"
                             android:text=""
                             android:textColor="#FFDC45"
-                            android:textStyle="bold">
-                        </TextView>
+                            android:textStyle="bold"></TextView>
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

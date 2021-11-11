@@ -165,7 +165,9 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                     public void onResponse(Call<Jarak> call, Response<Jarak> response) {
                         if (response.isSuccessful()) {
                             System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 50) {
+                            System.out.println(response.body().getOriginAddresses().get(0));
+                            System.out.println(response.body().getDestinationAddresses().get(0));
+                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 100) {
                                 try {
                                     if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                                         Intent intent = new Intent();
@@ -203,7 +205,9 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                     public void onResponse(Call<Jarak> call, Response<Jarak> response) {
                         if (response.isSuccessful()) {
                             System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 50) {
+                            System.out.println(response.body().getOriginAddresses().get(0));
+                            System.out.println(response.body().getDestinationAddresses().get(0));
+                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 100) {
                                 Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
                                 startActivityForResult(i, 1);
                             } else {
@@ -336,6 +340,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
 
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         shift.add(response.body().getData().get(i).getNama());
+                        jam_kerja_id = response.body().getData().get(0).getJamKerjaId();
                         if (tipe.equals("masuk")) {
                             jam_mulai.add(response.body().getData().get(i).getMulaiMasuk());
                             jam_selesai.add(response.body().getData().get(i).getSampaiMasuk());
@@ -365,45 +370,5 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] imgBytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgBytes, Base64.DEFAULT);
-    }
-
-    private boolean cekBefore(String time, String endtime) {
-
-        String pattern = "H:m:s";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-
-        try {
-            Date date1 = sdf.parse(time);
-            Date date2 = sdf.parse(endtime);
-
-            if (date1.before(date2)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private boolean cekAfter(String time, String endtime) {
-
-        String pattern = "H:m:s";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-
-        try {
-            Date date1 = sdf.parse(time);
-            Date date2 = sdf.parse(endtime);
-
-            if (date1.after(date2)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

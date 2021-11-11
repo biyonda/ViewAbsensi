@@ -28,11 +28,11 @@ public class Session {
     }
 
     public String getLat() {
-        return preferences.getString("lat", "-8.1520446");
+        return preferences.getString("lat", "-8.1509529");
     }
 
     public String getLng() {
-        return preferences.getString("lng", "113.7137827");
+        return preferences.getString("lng", "113.7154793");
     }
 
     public String getBaseUrl() {
