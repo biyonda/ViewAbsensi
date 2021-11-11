@@ -106,7 +106,6 @@ public class DinasDalamFragment extends Fragment {
                     sts_masuk = false;
                     absen_masuk.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
-//                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("TAG", "onResponse: "+apiError.getMessage());
                 }
             }
@@ -115,7 +114,6 @@ public class DinasDalamFragment extends Fragment {
             public void onFailure(Call<BaseResponse<Absen>> call, Throwable t) {
                 sts_masuk = false;
                 absen_masuk.setText("-");
-//                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "onResponse: "+t.getMessage());
             }
         });
@@ -153,7 +151,6 @@ public class DinasDalamFragment extends Fragment {
                 if (sts_jadwal == false) {
                     Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                 } else {
-
                     if (sts_masuk) {
                         Toast.makeText(getContext(), "Anda telah absen masuk", Toast.LENGTH_SHORT).show();
                     } else {
