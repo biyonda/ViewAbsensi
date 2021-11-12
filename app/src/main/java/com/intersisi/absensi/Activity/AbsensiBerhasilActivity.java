@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class AbsensiBerhasilActivity extends AppCompatActivity {
 
     Button btn_home;
-    TextView tipe, jam_absen;
+    TextView tipe, jam_absen, wib;
 
     Session session;
     Api api;
@@ -39,15 +39,19 @@ public class AbsensiBerhasilActivity extends AppCompatActivity {
         tipe = findViewById(R.id.tipe);
         jam_absen = findViewById(R.id.jam_absen);
         btn_home = findViewById(R.id.btn_home);
+        wib = findViewById(R.id.wib);
 
         if (getIntent().getStringExtra("tipe").equals("masuk")) {
             tipe.setText("DATANG");
+            wib.setVisibility(View.VISIBLE);
             getAbsen("1");
         } else if (getIntent().getStringExtra("tipe").equals("pulang")) {
             tipe.setText("PULANG");
+            wib.setVisibility(View.VISIBLE);
             getAbsen("2");
         } else {
             tipe.setText("Dinas Luar");
+            wib.setVisibility(View.VISIBLE);
             getAbsen("1");
         }
 

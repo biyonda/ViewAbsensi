@@ -170,9 +170,9 @@ public class DinasDalamFragment extends Fragment {
                             startActivity(it);
                         } else {
                             if (cekAfter(jam_skrg, jam_sampai_pulang)) {
-                                Toast.makeText(getContext(), "Waktu presensi telah habis !!!\nSilahkan hubungi operator untuk keterlambatan !!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Sudah melewati jam presensi", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

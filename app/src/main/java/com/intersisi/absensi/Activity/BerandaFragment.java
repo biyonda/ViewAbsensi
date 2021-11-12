@@ -116,10 +116,9 @@ public class BerandaFragment extends Fragment {
                     }
 
                     Collections.reverse(jadwalku);
-                    shift_pengguna.setText("Kelompok Shift : "+ TextUtils.join(", ", jadwalku));
-
+                    shift_pengguna.setText(TextUtils.join(", ", jadwalku));
                 } else {
-                    shift_pengguna.setText("Kelompok Shift : -");
+                    shift_pengguna.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
                     Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -127,7 +126,7 @@ public class BerandaFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
-                shift_pengguna.setText("Kelompok Shift : -");
+                shift_pengguna.setText("-");
                 Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

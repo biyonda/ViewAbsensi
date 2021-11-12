@@ -85,12 +85,14 @@
             android:textColor="#CE3032">
         </TextView>
         <TextView
+            android:id="@+id/wib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" WIB"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#CE3032">
+            android:textColor="#CE3032"
+            android:visibility="gone">
         </TextView>
     </LinearLayout>
 

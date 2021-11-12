@@ -7,7 +7,7 @@
         android:icon="@drawable/selector_beranda" />
     <item
         android:id="@+id/frm_absensi"
-        android:title="Absensi"
+        android:title="Presensi"
         android:icon="@drawable/selector_absensi" />
     <item
         android:id="@+id/frm_profil"

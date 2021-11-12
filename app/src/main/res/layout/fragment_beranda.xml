@@ -108,16 +108,31 @@
                             android:text="jabatan"
                             android:textSize="13sp"></TextView>
 
-                        <TextView
-                            android:id="@+id/shift_pengguna"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/jabatan_pengguna"
-                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/img_profil"
-                            android:text="Kelompok Shift :"
-                            android:textColor="#FCBD01"
-                            android:textStyle="bold"></TextView>
+                            android:layout_below="@+id/jabatan_pengguna">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:text="Kelompok Shift : "
+                                android:textColor="@color/green_dark"
+                                android:textStyle="bold">
+                            </TextView>
+                            <TextView
+                                android:id="@+id/shift_pengguna"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pagi - Jumat"
+                                android:textStyle="bold"
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="2dp"
+                                android:background="@color/green_dark"
+                                android:textColor="#FFF">
+                            </TextView>
+                        </LinearLayout>
                     </RelativeLayout>
 
 <!--                    <LinearLayout-->
