@@ -32,6 +32,9 @@ public class User {
     @SerializedName("kelompok_jam_id")
     @Expose
     private String kelompokJamId;
+    @SerializedName("shift")
+    @Expose
+    private String shift;
 
     public Integer getId() {
         return id;
@@ -105,4 +108,11 @@ public class User {
         this.kelompokJamId = kelompokJamId;
     }
 
+    public String getShift() {
+        return shift;
+    }
+
+    public void setShift(String shift) {
+        this.shift = shift;
+    }
 }

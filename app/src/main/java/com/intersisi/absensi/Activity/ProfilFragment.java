@@ -56,6 +56,8 @@ public class ProfilFragment extends Fragment {
         shift = view.findViewById(R.id.shift);
         btn_logout = view.findViewById(R.id.btn_logout);
 
+        shift.setText(session.getShift());
+
         nama_pengguna.setText(session.getNama());
         no_pegawai.setText(session.getNip());
         jabatan_pengguna.setText(session.getNamaBagian());
@@ -72,7 +74,7 @@ public class ProfilFragment extends Fragment {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                session.setUserStatus(false, "","", "", "", "", "", "");
+                session.setUserStatus(false, "","", "", "", "", "", "", "", "");
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
             }
@@ -95,10 +97,10 @@ public class ProfilFragment extends Fragment {
                     }
 
                     Collections.reverse(jadwalku);
-                    shift.setText("Kelompok Shift : "+ TextUtils.join(", ", jadwalku));
+//                    shift.setText(TextUtils.join(", ", jadwalku));
 
                 } else {
-                    shift.setText("Kelompok Shift : -");
+//                    shift.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
                     Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -106,7 +108,7 @@ public class ProfilFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
-                shift.setText("Kelompok Shift : -");
+//                shift.setText("-");
                 Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

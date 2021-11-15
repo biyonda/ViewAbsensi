@@ -43,7 +43,9 @@ public interface Api {
     @POST("absenWajah")
     Call<BaseResponse> absenWajah(
             @Field("status") String status,
+            @Field("jadwal_id") String jadwal_id,
             @Field("jam_kerja_id") String jam_kerja_id,
+            @Field("bagian_id") String bagian_id,
             @Field("lat") String lat,
             @Field("lng") String lng,
             @Field("gambar") String gambar,
@@ -64,7 +66,9 @@ public interface Api {
     @POST("absenScanQr")
     Call<BaseResponse> absenScanQr(
             @Field("status") String status,
+            @Field("jadwal_id") String jadwal_id,
             @Field("jam_kerja_id") String jam_kerja_id,
+            @Field("bagian_id") String bagian_id,
             @Field("lat") String lat,
             @Field("lng") String lng,
             @Field("dinas_luar") String dinas_luar

@@ -169,8 +169,8 @@ public class DinasDalamFragment extends Fragment {
                             it.putExtra("tipe", "masuk");
                             startActivity(it);
                         } else {
-                            if (cekAfter(jam_skrg, jam_sampai_pulang)) {
-                                Toast.makeText(getContext(), "Sudah melewati jam presensi", Toast.LENGTH_SHORT).show();
+                            if (cekAfter(jam_skrg, jam_sampai_masuk)) {
+                                Toast.makeText(getContext(), "Sudah melewati jam presensi datang", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
                             }
@@ -200,7 +200,11 @@ public class DinasDalamFragment extends Fragment {
                             it.putExtra("tipe", "pulang");
                             startActivity(it);
                         } else {
-                            Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                            if (cekAfter(jam_skrg, jam_sampai_pulang)) {
+                                Toast.makeText(getContext(), "Sudah melewati jam presensi pulang !!!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }

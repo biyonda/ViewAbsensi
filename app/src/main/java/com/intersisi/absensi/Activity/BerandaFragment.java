@@ -59,6 +59,7 @@ public class BerandaFragment extends Fragment {
         nip_pengguna = view.findViewById(R.id.nip_pengguna);
         jabatan_pengguna = view.findViewById(R.id.jabatan_pengguna);
         shift_pengguna = view.findViewById(R.id.shift_pengguna);
+        shift_pengguna.setText(session.getShift());
 
         nama_pengguna.setText(session.getNama());
         nip_pengguna.setText(session.getNip());
@@ -116,9 +117,9 @@ public class BerandaFragment extends Fragment {
                     }
 
                     Collections.reverse(jadwalku);
-                    shift_pengguna.setText(TextUtils.join(", ", jadwalku));
+//                    shift_pengguna.setText(TextUtils.join(", ", jadwalku));
                 } else {
-                    shift_pengguna.setText("-");
+//                    shift_pengguna.setText("-");
                     ApiError apiError = ErrorUtils.parseError(response);
                     Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -126,7 +127,7 @@ public class BerandaFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
-                shift_pengguna.setText("-");
+//                shift_pengguna.setText("-");
                 Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Soebandi E-Presensi"
+            android:text="S O E P R E E"
             android:textColor="@color/green_primary"
             android:textSize="24dp"
             android:textStyle="bold"></TextView>
@@ -40,7 +40,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aplikasi Presensi RSUD Dr. Soebandi"></TextView>
+            android:textColor="@color/green_primary"
+            android:text="RSU dr. Soebandi E-Presensi Elektronik"></TextView>
     </LinearLayout>
 
     <ImageView

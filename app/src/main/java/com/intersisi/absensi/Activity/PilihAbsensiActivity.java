@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -52,6 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,7 +78,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
     ArrayList<String> jam_mulai = new ArrayList<>();
     ArrayList<String> jam_selesai = new ArrayList<>();
 
-    String jam_kerja_id, tipe;
+    String jadwal_id, jam_kerja_id, tipe;
 
     String latitude = "0";
     String longitude = "0";
@@ -208,8 +210,15 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                             System.out.println(response.body().getOriginAddresses().get(0));
                             System.out.println(response.body().getDestinationAddresses().get(0));
                             if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 100) {
-                                Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
-                                startActivityForResult(i, 1);
+                                if (ContextCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 50);
+                                }
+                                //ask for authorisation
+                                else {
+                                    Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
+                                    startActivityForResult(i, 1);
+                                }
+                                    //start your camera
                             } else {
                                 Toast.makeText(PilihAbsensiActivity.this, "Anda tidak berada dalam radius Rs. Soebandi !!!", Toast.LENGTH_SHORT).show();
                             }
@@ -258,7 +267,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                     sts = 2;
                 }
 
-                absenWajah = api.absenWajah(sts + "", jam_kerja_id + "", latitude, longitude, imageToString(photo), "");
+                absenWajah = api.absenWajah(sts + "", jadwal_id+"", jam_kerja_id + "", session.getBagianId()+"", latitude, longitude, imageToString(photo), "");
                 absenWajah.enqueue(new Callback<BaseResponse>() {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
@@ -282,6 +291,8 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         } else if (requestCode == 1) {
             if (resultCode == 101) {
 //                Toast.makeText(PilihAbsensiActivity.this, data.getExtras().get("content").toString(), Toast.LENGTH_SHORT).show();
+                SpotsDialog dialog = (SpotsDialog) new SpotsDialog.Builder().setContext(PilihAbsensiActivity.this).build();
+                dialog.show();
                 cekQr = api.cekQr(data.getExtras().get("content").toString());
                 cekQr.enqueue(new Callback<BaseResponse>() {
                     @Override
@@ -293,7 +304,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                             } else {
                                 sts = 2;
                             }
-                            absenScanQr = api.absenScanQr(sts + "", jam_kerja_id + "", latitude, longitude, "");
+                            absenScanQr = api.absenScanQr(sts + "", jadwal_id+"", jam_kerja_id + "", session.getBagianId()+"", latitude, longitude, "");
                             absenScanQr.enqueue(new Callback<BaseResponse>() {
                                 @Override
                                 public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
@@ -302,26 +313,31 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                                         intent.putExtra("tipe", tipe);
                                         startActivity(intent);
                                         finish();
+                                        dialog.dismiss();
                                     } else {
                                         ApiError apiError = ErrorUtils.parseError(response);
                                         Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<BaseResponse> call, Throwable t) {
                                     Toast.makeText(PilihAbsensiActivity.this, "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
                                 }
                             });
                         } else {
                             ApiError apiError = ErrorUtils.parseError(response);
                             Toast.makeText(PilihAbsensiActivity.this, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<BaseResponse> call, Throwable t) {
                         Toast.makeText(PilihAbsensiActivity.this, "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
             }
@@ -340,6 +356,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
 
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         shift.add(response.body().getData().get(i).getNama());
+                        jadwal_id = response.body().getData().get(0).getId().toString();
                         jam_kerja_id = response.body().getData().get(0).getJamKerjaId();
                         if (tipe.equals("masuk")) {
                             jam_mulai.add(response.body().getData().get(i).getMulaiMasuk());

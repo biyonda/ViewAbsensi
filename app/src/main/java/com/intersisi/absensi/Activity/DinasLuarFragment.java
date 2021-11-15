@@ -77,6 +77,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
     double latitude = 0;
     double longitude = 0;
     String jam_kerja_id = "";
+    String jadwal_id = "";
     private GoogleMap mMap;
 
     TextView jam_absen, lokasi, koordinat;
@@ -98,7 +99,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
         jadwalHariIni(session.getNip());
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        Places.initialize(getContext(), R.string.google_maps_key+"");
+        Places.initialize(getContext(), R.string.google_maps_key + "");
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -115,7 +116,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                         longitude = Double.parseDouble(response.body().getData().get(0).getLng());
                         jam_absen.setText(response.body().getData().get(0).getScanDate().substring(11));
                         lokasi.setText("Lokasi");
-                        koordinat.setText(latitude+", "+longitude);
+                        koordinat.setText(latitude + ", " + longitude);
 
                         RequestOptions requestOptions = new RequestOptions();
                         requestOptions.signature(
@@ -152,7 +153,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                 jam_absen.setText("-");
                 lokasi.setText("-");
                 koordinat.setText("-");
-                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -160,25 +161,26 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
         btn_absen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (jam_kerja_id.equals("")) {
-                    Toast.makeText(getContext(), "Anda tidak ada jadwal hari ini", Toast.LENGTH_SHORT).show();
-                } else if(sts_masuk) {
+//                if (jam_kerja_id.equals("")) {
+//                    Toast.makeText(getContext(), "Anda tidak ada jadwal hari ini", Toast.LENGTH_SHORT).show();
+//                } else
+                if (sts_masuk) {
                     Toast.makeText(getContext(), "Anda telah absen", Toast.LENGTH_SHORT).show();
                 } else {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                            && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ){
+                            && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         getCurrentLocation();
                     } else {
-                        ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 105);
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 105);
                     }
 
                     try {
-                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                             Intent intent = new Intent();
                             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(intent, 102);
                         } else {
-                            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, 100);
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 100);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -193,12 +195,12 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     final Location location = task.getResult();
-                    if (location != null){
+                    if (location != null) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                     } else {
@@ -208,7 +210,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                                 .setFastestInterval(1000)
                                 .setNumUpdates(1);
 
-                        LocationCallback locationCallback = new LocationCallback(){
+                        LocationCallback locationCallback = new LocationCallback() {
                             @Override
                             public void onLocationResult(LocationResult locationResult) {
                                 super.onLocationResult(locationResult);
@@ -219,7 +221,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                         };
                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
                     }
-                    System.out.println(latitude+", "+longitude);
+                    System.out.println(latitude + ", " + longitude);
                 }
             });
         } else {
@@ -239,7 +241,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(getContext(), "Butuh akses kamera.", Toast.LENGTH_SHORT);
         }
 
-        if (requestCode == 105 && grantResults.length > 0 && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)){
+        if (requestCode == 105 && grantResults.length > 0 && (grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
             getCurrentLocation();
         } else {
             Toast.makeText(getContext(), "Butuh akses lokasi.", Toast.LENGTH_SHORT);
@@ -249,11 +251,11 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 102){
-            if(resultCode == RESULT_OK){
+        if (requestCode == 102) {
+            if (resultCode == RESULT_OK) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-                absenWajah = api.absenWajah("1", jam_kerja_id+"", latitude+"", longitude+"", imageToString(photo), "1");
+                absenWajah = api.absenWajah("1", jadwal_id + "", jam_kerja_id + "", session.getBagianId() + "", latitude + "", longitude + "", imageToString(photo), "1");
                 absenWajah.enqueue(new Callback<BaseResponse>() {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
@@ -270,7 +272,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
 
                     @Override
                     public void onFailure(Call<BaseResponse> call, Throwable t) {
-                        Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -283,6 +285,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
                 if (response.isSuccessful()) {
+                    jadwal_id = response.body().getData().get(0).getId().toString();
                     jam_kerja_id = response.body().getData().get(0).getJamKerjaId();
                 } else {
                     jam_kerja_id = "";
@@ -294,14 +297,14 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
                 jam_kerja_id = "";
-                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private String imageToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imgBytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgBytes, Base64.DEFAULT);
     }
@@ -311,7 +314,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
 
         mMap.clear();
-        LatLng rsds = new LatLng(-8.150933,113.7152505);
+        LatLng rsds = new LatLng(-8.150933, 113.7152505);
         mMap.addMarker(new MarkerOptions().position(rsds).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rsds, 15.0f));
 

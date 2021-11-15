@@ -15,7 +15,7 @@ public class Session {
         this.editor = preferences.edit();
     }
 
-    public void setUserStatus(Boolean loggedIn, String id_user, String nip, String nama, String token, String id_bagian, String nama_bagian, String inisial){
+    public void setUserStatus(Boolean loggedIn, String id_user, String nip, String nama, String token, String id_bagian, String nama_bagian, String inisial, String bagian_id, String shift){
         editor.putBoolean("loggedIn", loggedIn);
         editor.putString("id_user", id_user);
         editor.putString("nip", nip);
@@ -24,6 +24,8 @@ public class Session {
         editor.putString("id_bagian", id_bagian);
         editor.putString("nama_bagian", nama_bagian);
         editor.putString("inisial", inisial);
+        editor.putString("bagian_id", bagian_id);
+        editor.putString("shift", shift);
         editor.commit();
     }
 
@@ -36,7 +38,7 @@ public class Session {
     }
 
     public String getBaseUrl() {
-        return preferences.getString("baseUrl", "http://api.pdesoebandi.id");
+        return preferences.getString("baseUrl", "api.pdesoebandi.id");
     }
 
     public boolean getUserLoggedIn() {
@@ -57,6 +59,14 @@ public class Session {
 
     public String getNamaBagian() {
         return preferences.getString("nama_bagian", "");
+    }
+
+    public String getBagianId() {
+        return preferences.getString("bagian_id",  "");
+    }
+
+    public String getShift() {
+        return preferences.getString("shift",  "");
     }
 }
 
