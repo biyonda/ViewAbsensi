@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class BerandaFragment extends Fragment {
     Handler handler = new Handler();
 
     TextView nama_pengguna, nip_pengguna, jabatan_pengguna, shift_pengguna;
+    ImageView img_profil;
     Session session;
     Api api;
     Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
@@ -54,6 +56,7 @@ public class BerandaFragment extends Fragment {
         btn_jadwal_saya = (LinearLayout) view.findViewById(R.id.btn_jadwal_saya);
         btn_riwayat_kehadiran = (LinearLayout) view.findViewById(R.id.btn_riwayat_kehadiran);
         btn_pengajuan_izin = (LinearLayout) view.findViewById(R.id.btn_pengajuan_izin);
+        img_profil = (ImageView) view.findViewById(R.id.img_profil);
 
         nama_pengguna = view.findViewById(R.id.nama_pengguna);
         nip_pengguna = view.findViewById(R.id.nip_pengguna);
