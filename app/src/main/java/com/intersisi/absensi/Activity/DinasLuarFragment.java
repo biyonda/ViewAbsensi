@@ -55,6 +55,7 @@ import com.intersisi.absensi.Response.BaseResponse;
 import com.intersisi.absensi.Session.Session;
 import com.intersisi.absensi.Table.Absen;
 import com.intersisi.absensi.Table.JadwalHariIni;
+import com.intersisi.absensi.Table.Jarak;
 
 import java.io.ByteArrayOutputStream;
 
@@ -73,6 +74,7 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
     Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
     Call<BaseResponse> absenWajah;
     Call<BaseResponse<Absen>> absenMasuk;
+    Call<Jarak> getJarak;
 
     double latitude = 0;
     double longitude = 0;
@@ -115,7 +117,20 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                         latitude = Double.parseDouble(response.body().getData().get(0).getLat());
                         longitude = Double.parseDouble(response.body().getData().get(0).getLng());
                         jam_absen.setText(response.body().getData().get(0).getScanDate().substring(11));
-                        lokasi.setText("Lokasi");
+                        String dest = latitude+","+longitude;
+                        getJarak = api.getJarak(dest, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
+                        getJarak.enqueue(new Callback<Jarak>() {
+                            @Override
+                            public void onResponse(Call<Jarak> call, Response<Jarak> response) {
+                                if (response.isSuccessful()) {
+                                    lokasi.setText(response.body().getDestinationAddresses().get(0));
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Jarak> call, Throwable t) {
+                            }
+                        });
                         koordinat.setText(latitude + ", " + longitude);
 
                         RequestOptions requestOptions = new RequestOptions();
