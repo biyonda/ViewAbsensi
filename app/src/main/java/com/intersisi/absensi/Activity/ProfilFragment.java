@@ -34,7 +34,7 @@ public class ProfilFragment extends Fragment {
 
     RelativeLayout btn_logout, btn_edit;
     TextView nama_pengguna, no_pegawai, jabatan_pengguna, shift;
-    ImageView foto_pengguna;
+    ImageView img_profil;
 
     Session session;
     Api api;
@@ -55,6 +55,7 @@ public class ProfilFragment extends Fragment {
         jabatan_pengguna = view.findViewById(R.id.jabatan_pengguna);
         shift = view.findViewById(R.id.shift);
         btn_logout = view.findViewById(R.id.btn_logout);
+        img_profil = view.findViewById(R.id.img_profil);
 
         shift.setText(session.getShift());
 
@@ -79,6 +80,14 @@ public class ProfilFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        if (session.getJenkel().equalsIgnoreCase("l")) {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_l);
+        } else if(session.getJenkel().equalsIgnoreCase("p")) {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_l);
+        } else {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_default);
+        }
 
         return view;
     }

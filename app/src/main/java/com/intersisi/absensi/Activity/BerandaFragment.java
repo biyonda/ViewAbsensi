@@ -103,6 +103,14 @@ public class BerandaFragment extends Fragment {
             }
         });
 
+        if (session.getJenkel().equalsIgnoreCase("l")) {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_l);
+        } else if(session.getJenkel().equalsIgnoreCase("p")) {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_l);
+        } else {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_default);
+        }
+
         return view;
     }
 

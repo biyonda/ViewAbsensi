@@ -40,10 +40,10 @@
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
-                android:id="@+id/foto_pengguna"
+                android:id="@+id/img_profil"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/profile_ic_photo">
+                android:background="@drawable/profile_photo_default">
             </ImageView>
             <TextView
                 android:id="@+id/nama_pengguna"
