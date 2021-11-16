@@ -71,9 +71,9 @@
                         <ImageView
                             android:id="@+id/img_profil"
                             android:layout_width="75dp"
-                            android:layout_height="100dp"
+                            android:layout_height="75dp"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/profile_dummy_rectangle"></ImageView>
+                            android:background="@drawable/profile_ic_photo"></ImageView>
 
                         <TextView
                             android:id="@+id/nama_pengguna"
@@ -343,7 +343,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pengajuan Izin"
+                            android:text="Pengajuan Cuti"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="#000">
@@ -351,7 +351,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pembuatan pengajuan izin pegawai"
+                            android:text="Pembuatan pengajuan cuti pegawai"
                             android:textStyle="italic"
                             android:textColor="#AAA">
                         </TextView>

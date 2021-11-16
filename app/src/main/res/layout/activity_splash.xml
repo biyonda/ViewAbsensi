@@ -41,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/green_primary"
-            android:text="RSU dr. Soebandi E-Presensi Elektronik"></TextView>
+            android:textStyle="bold"
+            android:text="RSD dr. Soebandi E-Presensi Elektronik"></TextView>
     </LinearLayout>
 
     <ImageView

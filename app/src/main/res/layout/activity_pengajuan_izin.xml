@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Pengajuan Izin"
+            android:text="Pengajuan Cuti"
             android:textStyle="bold"
             android:textSize="21sp"
             android:textColor="@color/white">
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Isikan data berikut untuk pengajuan izin"
+        android:text="Isikan data berikut untuk pengajuan cuti"
         android:layout_gravity="center">
     </TextView>
 
@@ -195,7 +195,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="Keterangan Izin \t\t\t\t : "
+        android:text="Keterangan Cuti \t\t\t\t : "
         android:textStyle="bold"
         android:textColor="@color/green_dark">
     </TextView>
@@ -217,7 +217,7 @@
                 android:layout_height="match_parent"
                 android:textSize="13sp"
                 android:background="#fff"
-                android:hint="Tulis keterangan izin disini ....">
+                android:hint="Tulis keterangan cuti disini ....">
             </EditText>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -41,9 +41,9 @@
             android:gravity="center">
             <ImageView
                 android:id="@+id/foto_pengguna"
-                android:layout_width="75dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/profile_dummy_rectangle">
+                android:background="@drawable/profile_ic_photo">
             </ImageView>
             <TextView
                 android:id="@+id/nama_pengguna"
