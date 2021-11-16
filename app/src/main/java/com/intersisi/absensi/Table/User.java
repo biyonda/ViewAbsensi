@@ -35,6 +35,9 @@ public class User {
     @SerializedName("shift")
     @Expose
     private String shift;
+    @SerializedName("jenkel")
+    @Expose
+    private String jenkel;
 
     public Integer getId() {
         return id;
@@ -114,5 +117,13 @@ public class User {
 
     public void setShift(String shift) {
         this.shift = shift;
+    }
+
+    public String getJenkel() {
+        return jenkel;
+    }
+
+    public void setJenkel(String jenkel) {
+        this.jenkel = jenkel;
     }
 }

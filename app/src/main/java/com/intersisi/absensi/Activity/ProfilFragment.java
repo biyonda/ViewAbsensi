@@ -74,7 +74,7 @@ public class ProfilFragment extends Fragment {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                session.setUserStatus(false, "","", "", "", "", "", "", "", "");
+                session.setUserStatus(false, "","", "", "", "", "", "", "", "", "");
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
             }

@@ -156,7 +156,7 @@ public class DinasDalamFragment extends Fragment {
                     Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                 } else {
                     if (sts_masuk) {
-                        Toast.makeText(getContext(), "Anda telah absen masuk", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Anda telah presensi masuk", Toast.LENGTH_SHORT).show();
                     } else {
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         Date date = new Date();
@@ -187,7 +187,7 @@ public class DinasDalamFragment extends Fragment {
                     Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                 } else {
                     if (sts_pulang) {
-                        Toast.makeText(getContext(), "Anda telah absen pulang", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Anda telah presensi pulang", Toast.LENGTH_SHORT).show();
                     } else {
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         Date date = new Date();

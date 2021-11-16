@@ -69,7 +69,7 @@ public class AbsensiBerhasilActivity extends AppCompatActivity {
         session = new Session(AbsensiBerhasilActivity.this);
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
 
-        absen = api.getAbsen("1");
+        absen = api.getAbsen(sts);
         absen.enqueue(new Callback<BaseResponse<Absen>>() {
             @Override
             public void onResponse(Call<BaseResponse<Absen>> call, Response<BaseResponse<Absen>> response) {

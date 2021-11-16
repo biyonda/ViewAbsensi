@@ -15,7 +15,7 @@ public class Session {
         this.editor = preferences.edit();
     }
 
-    public void setUserStatus(Boolean loggedIn, String id_user, String nip, String nama, String token, String id_bagian, String nama_bagian, String inisial, String bagian_id, String shift){
+    public void setUserStatus(Boolean loggedIn, String id_user, String nip, String nama, String token, String id_bagian, String nama_bagian, String inisial, String bagian_id, String shift, String jenkel){
         editor.putBoolean("loggedIn", loggedIn);
         editor.putString("id_user", id_user);
         editor.putString("nip", nip);
@@ -26,6 +26,7 @@ public class Session {
         editor.putString("inisial", inisial);
         editor.putString("bagian_id", bagian_id);
         editor.putString("shift", shift);
+        editor.putString("jenkel", jenkel);
         editor.commit();
     }
 
@@ -67,6 +68,10 @@ public class Session {
 
     public String getShift() {
         return preferences.getString("shift",  "");
+    }
+
+    public String getJenkel() {
+        return preferences.getString("jenkel",  "");
     }
 }
 
