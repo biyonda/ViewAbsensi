@@ -103,10 +103,10 @@ public class BerandaFragment extends Fragment {
             }
         });
 
-        if (session.getJenkel().equalsIgnoreCase("l")) {
+        if (session.getJenkel().equalsIgnoreCase("laki-laki")) {
             img_profil.setBackgroundResource(R.drawable.profile_photo_l);
-        } else if(session.getJenkel().equalsIgnoreCase("p")) {
-            img_profil.setBackgroundResource(R.drawable.profile_photo_l);
+        } else if(session.getJenkel().equalsIgnoreCase("perempuan")) {
+            img_profil.setBackgroundResource(R.drawable.profile_photo_p);
         } else {
             img_profil.setBackgroundResource(R.drawable.profile_photo_default);
         }

@@ -169,7 +169,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                             System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
                             System.out.println(response.body().getOriginAddresses().get(0));
                             System.out.println(response.body().getDestinationAddresses().get(0));
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 100) {
+                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 150) {
                                 try {
                                     if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                                         Intent intent = new Intent();

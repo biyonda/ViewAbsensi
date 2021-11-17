@@ -15,7 +15,6 @@
         <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/activity_pilih_absensi.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/activity_riwayat_kehadiran.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/activity_splash.xml" value="0.28442028985507245" />
-        <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/activity_ubah_profil.xml" value="0.12360688956433637" />
         <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/activity_user_profile.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/adapter_riwayat_kehadiran.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/ViewAbsensi/app/src/main/res/layout/fragment_absensi.xml" value="0.28442028985507245" />
@@ -40,7 +39,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
