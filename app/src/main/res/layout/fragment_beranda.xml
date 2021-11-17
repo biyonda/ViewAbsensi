@@ -70,10 +70,10 @@
 
                         <ImageView
                             android:id="@+id/img_profil"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="78dp"
+                            android:layout_height="78dp"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/profile_photo_l"></ImageView>
+                            android:background="@drawable/profile_photo_default"></ImageView>
 
                         <TextView
                             android:id="@+id/nama_pengguna"

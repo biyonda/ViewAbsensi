@@ -57,7 +57,7 @@ public class EditProfilActivity extends AppCompatActivity {
         btn_browse = findViewById(R.id.btn_browse);
         btn_simpan = findViewById(R.id.btn_simpan);
         btn_back = findViewById(R.id.btn_back);
-        foto_pengguna = findViewById(R.id.foto_pengguna);
+//        foto_pengguna = findViewById(R.id.foto_pengguna);
         password_pengguna = findViewById(R.id.password_pengguna);
 
         session = new Session(this);
