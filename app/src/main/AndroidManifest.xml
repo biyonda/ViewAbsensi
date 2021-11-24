@@ -15,12 +15,17 @@
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
 
+<!--    android:hardwareAccelerated="false"-->
+<!--    android:largeHeap="true"-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:theme="@style/Theme.ViewAbsensi"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
