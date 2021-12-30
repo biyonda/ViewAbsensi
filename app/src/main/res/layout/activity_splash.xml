@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="S O E P R E E"
+            android:text="S O E S I E"
             android:textColor="@color/green_primary"
             android:textSize="24dp"
             android:textStyle="bold"></TextView>
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/green_primary"
             android:textStyle="bold"
-            android:text="RSD dr. Soebandi E-Presensi Elektronik"></TextView>
+            android:text="RSD dr. Soebandi Presensi Elektronik"></TextView>
     </LinearLayout>
 
     <ImageView

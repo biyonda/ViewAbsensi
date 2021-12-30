@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Soebandi E-Presensi"
-            android:textSize="18dp"
+            android:text="Soebandi Presensi Elektronik"
+            android:textSize="18sp"
             android:textStyle="bold">
         </TextView>
     </LinearLayout>
