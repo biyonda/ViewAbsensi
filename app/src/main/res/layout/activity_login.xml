@@ -133,15 +133,15 @@
         android:text="Login">
     </Button>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:text="Lupa Password"
-        android:textStyle="bold"
-        android:textColor="@color/green_dark">
-    </TextView>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:text="Lupa Password"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/green_dark">-->
+<!--    </TextView>-->
 
     <ProgressBar
         android:id="@+id/progress"
