@@ -33,8 +33,16 @@ import retrofit2.Response;
 public class ProfilFragment extends Fragment {
 
     RelativeLayout btn_logout, btn_edit;
-    TextView nama_pengguna, no_pegawai, jabatan_pengguna, shift;
+    TextView nama_pengguna, no_pegawai, jabatan_pengguna, shift, jarak;
     ImageView img_profil;
+
+    // Koordinat Lokasi Penerima
+    double initialLat = 0;
+    double initialLong = 0;
+
+    // Koordinat Lokasi Larisso
+    double finalLat = -8.3495079;
+    double finalLong = 113.6051873;
 
     Session session;
     Api api;
@@ -48,22 +56,16 @@ public class ProfilFragment extends Fragment {
 
         session = new Session(getContext());
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
-
         nama_pengguna = view.findViewById(R.id.nama_pengguna);
         btn_edit = view.findViewById(R.id.btn_edit);
-        no_pegawai = view.findViewById(R.id.no_pegawai);
-        jabatan_pengguna = view.findViewById(R.id.jabatan_pengguna);
-        shift = view.findViewById(R.id.shift);
         btn_logout = view.findViewById(R.id.btn_logout);
-        img_profil = view.findViewById(R.id.img_profil);
+        jarak = view.findViewById(R.id.jarak);
 
-        shift.setText(session.getShift());
+        initialLat = Double.parseDouble(session.getLat());
+        initialLong = Double.parseDouble(session.getLng());
+        Double hasil = CalculationByDistance(initialLat, initialLong, finalLat, finalLong);
 
-        nama_pengguna.setText(session.getNama());
-        no_pegawai.setText(session.getNip());
-        jabatan_pengguna.setText(session.getNamaBagian());
-
-        jadwalHariIni(session.getNip());
+        jarak.setText(""+hasil);
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,45 +83,25 @@ public class ProfilFragment extends Fragment {
             }
         });
 
-        if (session.getJenkel().equalsIgnoreCase("laki-laki")) {
-            img_profil.setBackgroundResource(R.drawable.profile_photo_l);
-        } else if(session.getJenkel().equalsIgnoreCase("perempuan")) {
-            img_profil.setBackgroundResource(R.drawable.profile_photo_p);
-        } else {
-            img_profil.setBackgroundResource(R.drawable.profile_photo_default);
-        }
 
         return view;
     }
 
-    public void jadwalHariIni(String nip) {
-        getJadwalHariIni = api.getJadwalHariIni(session.getNip());
-        getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
-                if (response.isSuccessful()) {
-                    ArrayList<String> jadwalku = new ArrayList<>();
-                    jadwalku.clear();
+    public double CalculationByDistance(double initialLat, double initialLong, double finalLat, double finalLong) {
+        int R = 6371; // km (Earth radius)
+        double dLat = toRadians(finalLat - initialLat);
+        double dLon = toRadians(finalLong - initialLong);
+        initialLat = toRadians(initialLat);
+        finalLat = toRadians(finalLat);
 
-                    for (int i = 0; i < response.body().getData().size(); i++) {
-                        jadwalku.add(response.body().getData().get(i).getNama());
-                    }
-
-                    Collections.reverse(jadwalku);
-//                    shift.setText(TextUtils.join(", ", jadwalku));
-
-                } else {
-//                    shift.setText("-");
-                    ApiError apiError = ErrorUtils.parseError(response);
-                    Toast.makeText(getContext(), apiError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
-//                shift.setText("-");
-                Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(initialLat) * Math.cos(finalLat);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
     }
+
+    public double toRadians(double deg) {
+        return deg * (Math.PI / 180);
+    }
+
 }
