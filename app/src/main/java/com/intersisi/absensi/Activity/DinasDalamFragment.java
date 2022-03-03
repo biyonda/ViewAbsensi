@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Looper;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,8 @@ import retrofit2.Response;
 public class DinasDalamFragment extends Fragment {
 
     LinearLayout btn_absen_masuk, btn_absen_pulang;
-    TextView tgl_hadir, absen_masuk, absen_pulang;
+    TextView tgl_hadir, absen_masuk, absen_pulang, jarak, test;
+    Button btn_refresh_jarak;
 
     DateFormat dateFormat;
     Date date;
@@ -73,6 +76,14 @@ public class DinasDalamFragment extends Fragment {
     String jam_mulai_masuk, jam_sampai_masuk;
     String jam_mulai_pulang, jam_sampai_pulang;
 
+    private GpsTracker gpsTracker;
+    double hasil = 0;
+    double titik_absen = 250;
+
+    //Koordinat Soebandi
+    double finalLat = -8.151507878490508;
+    double finalLong = 113.7152087383908;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dinas_dalam, container, false);
@@ -86,10 +97,14 @@ public class DinasDalamFragment extends Fragment {
         absen_masuk = view.findViewById(R.id.absen_masuk);
         absen_pulang = view.findViewById(R.id.absen_pulang);
         tgl_hadir.setText(dateFormat.format(date));
+        jarak = view.findViewById(R.id.jarak);
+
+        btn_refresh_jarak = view.findViewById(R.id.btn_refresh_jarak);
 
         session = new Session(getContext());
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
         jadwalHariIni(session.getNip());
+
 
         absenMasuk = api.getAbsen("1");
         absenMasuk.enqueue(new Callback<BaseResponse<Absen>>() {
@@ -149,33 +164,55 @@ public class DinasDalamFragment extends Fragment {
             });
         }
 
+        try {
+            if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            } else {
+                getLocation();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        btn_refresh_jarak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLocation();
+                Toast.makeText(getContext(), "Jarak lokasi diperbaharui", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btn_absen_masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sts_jadwal == false) {
-                    Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (sts_masuk) {
-                        Toast.makeText(getContext(), "Anda telah presensi masuk", Toast.LENGTH_SHORT).show();
+                if (titik_absen < hasil) {
+                    if (sts_jadwal == false) {
+                        Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                     } else {
-                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                        Date date = new Date();
-                        String jam_skrg = formatter.format(date);
-                        System.out.println(jam_skrg);
-                        System.out.println(jam_mulai_masuk);
-                        System.out.println(jam_sampai_masuk);
-                        if (cekAfter(jam_skrg, jam_mulai_masuk) && cekBefore(jam_skrg, jam_sampai_masuk)) {
-                            Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                            it.putExtra("tipe", "masuk");
-                            startActivity(it);
+                        if (sts_masuk) {
+                            Toast.makeText(getContext(), "Anda telah presensi masuk", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (cekAfter(jam_skrg, jam_sampai_masuk)) {
-                                Toast.makeText(getContext(), "Sudah melewati jam presensi datang", Toast.LENGTH_SHORT).show();
+                            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                            Date date = new Date();
+                            String jam_skrg = formatter.format(date);
+                            System.out.println(jam_skrg);
+                            System.out.println(jam_mulai_masuk);
+                            System.out.println(jam_sampai_masuk);
+                            if (cekAfter(jam_skrg, jam_mulai_masuk) && cekBefore(jam_skrg, jam_sampai_masuk)) {
+                                Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                                it.putExtra("tipe", "masuk");
+                                startActivity(it);
                             } else {
-                                Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                if (cekAfter(jam_skrg, jam_sampai_masuk)) {
+                                    Toast.makeText(getContext(), "Sudah melewati jam presensi datang", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     }
+                } else {
+                    Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,31 +220,36 @@ public class DinasDalamFragment extends Fragment {
         btn_absen_pulang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sts_jadwal == false) {
-                    Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (sts_pulang) {
-                        Toast.makeText(getContext(), "Anda telah presensi pulang", Toast.LENGTH_SHORT).show();
+                if (titik_absen < hasil) {
+                    if (sts_jadwal == false) {
+                        Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                     } else {
-                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                        Date date = new Date();
-                        String jam_skrg = formatter.format(date);
-                        System.out.println(jam_skrg);
-                        System.out.println(jam_mulai_pulang);
-                        System.out.println(jam_sampai_pulang);
-                        if (cekAfter(jam_skrg, jam_mulai_pulang) && cekBefore(jam_skrg, jam_sampai_pulang)) {
-                            Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                            it.putExtra("tipe", "pulang");
-                            startActivity(it);
+                        if (sts_pulang) {
+                            Toast.makeText(getContext(), "Anda telah presensi pulang", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (cekAfter(jam_skrg, jam_sampai_pulang)) {
-                                Toast.makeText(getContext(), "Sudah melewati jam presensi pulang !!!", Toast.LENGTH_SHORT).show();
+                            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                            Date date = new Date();
+                            String jam_skrg = formatter.format(date);
+                            System.out.println(jam_skrg);
+                            System.out.println(jam_mulai_pulang);
+                            System.out.println(jam_sampai_pulang);
+                            if (cekAfter(jam_skrg, jam_mulai_pulang) && cekBefore(jam_skrg, jam_sampai_pulang)) {
+                                Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                                it.putExtra("tipe", "pulang");
+                                startActivity(it);
                             } else {
-                                Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                if (cekAfter(jam_skrg, jam_sampai_pulang)) {
+                                    Toast.makeText(getContext(), "Sudah melewati jam presensi pulang !!!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     }
+                } else {
+                    Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -278,5 +320,34 @@ public class DinasDalamFragment extends Fragment {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void getLocation(){
+        gpsTracker = new GpsTracker(getContext());
+        if(gpsTracker.canGetLocation()){
+            double initialLat = gpsTracker.getLatitude();
+            double initialLong = gpsTracker.getLongitude();
+            hasil = CalculationByDistance(initialLat, initialLong, finalLat, finalLong) * 1000;
+            jarak.setText(String.format("%.0f", hasil));
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
+    }
+
+    public double CalculationByDistance(double initialLat, double initialLong, double finalLat, double finalLong) {
+        int R = 6371; // km (Earth radius)
+        double dLat = toRadians(finalLat - initialLat);
+        double dLon = toRadians(finalLong - initialLong);
+        initialLat = toRadians(initialLat);
+        finalLat = toRadians(finalLat);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(initialLat) * Math.cos(finalLat);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    public double toRadians(double deg) {
+        return deg * (Math.PI / 180);
     }
 }

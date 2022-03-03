@@ -44,21 +44,10 @@ import retrofit2.Response;
 public class ProfilFragment extends Fragment {
 
     RelativeLayout btn_logout, btn_edit;
-    TextView latTxt, longTxt, jarak;
-    private GpsTracker gpsTracker;
-
-    double finalLat = -8.151507878490508;
-    double finalLong = 113.7152087383908;
-
-    double hasil = 0;
-
-    Button btn_location;
-    LocationManager locationManager;
 
     Session session;
     Api api;
     Call<BaseResponse<JadwalHariIni>> getJadwalHariIni;
-//    Call<BaseResponse> logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,26 +58,6 @@ public class ProfilFragment extends Fragment {
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
         btn_edit = view.findViewById(R.id.btn_edit);
         btn_logout = view.findViewById(R.id.btn_logout);
-        btn_location = view.findViewById(R.id.btn_location);
-        jarak = view.findViewById(R.id.jarak);
-        latTxt = view.findViewById(R.id.latTxt);
-        longTxt = view.findViewById(R.id.longTxt);
-
-        btn_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-                    } else {
-                        getLocation();
-                        Toast.makeText(getContext(), "Koordinat pengguna berhasil diperbaharui", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,37 +77,5 @@ public class ProfilFragment extends Fragment {
 
         return view;
     }
-
-    public void getLocation(){
-        gpsTracker = new GpsTracker(getContext());
-        if(gpsTracker.canGetLocation()){
-            double initialLat = gpsTracker.getLatitude();
-            double initialLong = gpsTracker.getLongitude();
-            latTxt.setText("Latitude : " + String.valueOf(initialLat));
-            longTxt.setText("Logitude : " + String.valueOf(initialLong));
-            hasil = CalculationByDistance(initialLat, initialLong, finalLat, finalLong) * 1000;
-            jarak.setText("Jarak dari titik absensi : " + String.format("%.0f", hasil) + " meter");
-        }else{
-            gpsTracker.showSettingsAlert();
-        }
-    }
-
-    public double CalculationByDistance(double initialLat, double initialLong, double finalLat, double finalLong) {
-        int R = 6371; // km (Earth radius)
-        double dLat = toRadians(finalLat - initialLat);
-        double dLon = toRadians(finalLong - initialLong);
-        initialLat = toRadians(initialLat);
-        finalLat = toRadians(finalLat);
-
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(initialLat) * Math.cos(finalLat);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-    }
-
-    public double toRadians(double deg) {
-        return deg * (Math.PI / 180);
-    }
-
 
 }
