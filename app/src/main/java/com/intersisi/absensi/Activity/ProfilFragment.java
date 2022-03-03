@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
@@ -43,15 +44,15 @@ import retrofit2.Response;
 public class ProfilFragment extends Fragment {
 
     RelativeLayout btn_logout, btn_edit;
-    TextView nama_pengguna, jarak, showLocation;
-    ImageView img_profil;
+    TextView latTxt, longTxt, jarak;
+    private GpsTracker gpsTracker;
 
-    // Koordinat Lokasi Penerima
-    double initialLat = 0;
-    double initialLong = 0;
+    double finalLat = -8.151507878490508;
+    double finalLong = 113.7152087383908;
 
-    private static final int REQUEST_LOCATION = 1;
-    Button btnGetLocation;
+    double hasil = 0;
+
+    Button btn_location;
     LocationManager locationManager;
 
     Session session;
@@ -66,33 +67,28 @@ public class ProfilFragment extends Fragment {
 
         session = new Session(getContext());
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
-        nama_pengguna = view.findViewById(R.id.nama_pengguna);
         btn_edit = view.findViewById(R.id.btn_edit);
         btn_logout = view.findViewById(R.id.btn_logout);
+        btn_location = view.findViewById(R.id.btn_location);
         jarak = view.findViewById(R.id.jarak);
+        latTxt = view.findViewById(R.id.latTxt);
+        longTxt = view.findViewById(R.id.longTxt);
 
-        double finalLat = Double.parseDouble(session.getLat());
-        double finalLong = Double.parseDouble(session.getLng());
-        Double hasil = CalculationByDistance(initialLat, initialLong, finalLat, finalLong);
-
-        ActivityCompat.requestPermissions( getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        showLocation = view.findViewById(R.id.showLocation);
-        btnGetLocation = view.findViewById(R.id.btnGetLocation);
-        btnGetLocation.setOnClickListener(new View.OnClickListener() {
+        btn_location.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    OnGPS();
-                } else {
-                    getLocation();
-                    jarak.setText(""+ Math.round(hasil));
+            public void onClick(View view) {
+                try {
+                    if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+                    } else {
+                        getLocation();
+                        Toast.makeText(getContext(), "Koordinat pengguna berhasil diperbaharui", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         });
-
-
-
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,11 +106,21 @@ public class ProfilFragment extends Fragment {
             }
         });
 
-
-
-
-
         return view;
+    }
+
+    public void getLocation(){
+        gpsTracker = new GpsTracker(getContext());
+        if(gpsTracker.canGetLocation()){
+            double initialLat = gpsTracker.getLatitude();
+            double initialLong = gpsTracker.getLongitude();
+            latTxt.setText("Latitude : " + String.valueOf(initialLat));
+            longTxt.setText("Logitude : " + String.valueOf(initialLong));
+            hasil = CalculationByDistance(initialLat, initialLong, finalLat, finalLong) * 1000;
+            jarak.setText("Jarak dari titik absensi : " + String.format("%.0f", hasil) + " meter");
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
     }
 
     public double CalculationByDistance(double initialLat, double initialLong, double finalLat, double finalLong) {
@@ -134,40 +140,5 @@ public class ProfilFragment extends Fragment {
         return deg * (Math.PI / 180);
     }
 
-    private void OnGPS() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                getActivity(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        } else {
-            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (locationGPS != null) {
-                double lat = locationGPS.getLatitude();
-                double longi = locationGPS.getLongitude();
-                initialLat = Double.valueOf(lat);
-                initialLong = Double.valueOf(longi);
-                showLocation.setText("Your Location: " + "\n" + "Latitude: " + initialLat + "\n" + "Longitude: " + initialLong);
-            } else {
-                Toast.makeText(getActivity(), "Unable to find location.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
 }
