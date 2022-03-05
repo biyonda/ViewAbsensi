@@ -38,6 +38,9 @@ public class Kehadiran {
     @SerializedName("dinas_luar")
     @Expose
     private Integer dinasLuar;
+    @SerializedName("status_verifikasi")
+    @Expose
+    private Integer stsVerifikasi;
 
     public Integer getAttId() {
         return attId;
@@ -127,4 +130,11 @@ public class Kehadiran {
         this.dinasLuar = dinasLuar;
     }
 
+    public Integer getStsVerifikasi() {
+        return stsVerifikasi;
+    }
+
+    public void setStsVerifikasi(Integer stsVerifikasi) {
+        this.stsVerifikasi = stsVerifikasi;
+    }
 }

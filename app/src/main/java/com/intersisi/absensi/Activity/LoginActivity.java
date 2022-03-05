@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.intersisi.absensi.Api.Api;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_READ_PHONE_STATE = 0;
     Button btn_login;
     ImageView show_password;
+    TextView lupa_password;
     EditText nip, password;
     ProgressBar progress;
     Context context;
@@ -123,6 +125,14 @@ public class LoginActivity extends AppCompatActivity {
 
         show_password.setBackgroundResource(R.drawable.ic_eye_open);
         show_password.setOnClickListener(mToggleShowPasswordButton);
+
+        lupa_password = findViewById(R.id.lupa_password);
+        lupa_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "Untuk merubah password\nsilahkan menghubungi Instalasi PDE pada jam kerja!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

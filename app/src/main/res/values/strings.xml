@@ -36,9 +36,9 @@
     </string-array>
 
     <string-array name="izin_array">
-        <item>Pilih Izin</item>
+<!--        <item>Pilih Cuti</item>-->
         <item>Sakit</item>
-        <item>Cuti</item>
+<!--        <item>Cuti</item>-->
         <!--        <item>Dinas Luar</item>-->
     </string-array>
 

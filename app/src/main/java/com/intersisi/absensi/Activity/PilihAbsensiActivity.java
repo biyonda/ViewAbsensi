@@ -73,6 +73,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
     Call<BaseResponse> absenScanQr;
     Call<BaseResponse> cekQr;
     Call<Jarak> getJarak;
+    Call<BaseResponse> getSettingJarak;
 
     ArrayList<String> shift = new ArrayList<>();
     ArrayList<String> jam_mulai = new ArrayList<>();
@@ -83,6 +84,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
     String latitude = "0";
     String longitude = "0";
     String dest = "";
+    int tmp_jarak = 0;
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @SuppressLint("MissingPermission")
@@ -142,6 +144,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
 
         tipe = getIntent().getStringExtra("tipe");
         jadwalHariIni(session.getNip());
+        setJarak();
 
         if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -160,6 +163,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         btn_absen_wajah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(tmp_jarak);
                 String origin = session.getLat() + "," + session.getLng();
                 getJarak = api.getJarak(origin, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
                 getJarak.enqueue(new Callback<Jarak>() {
@@ -169,7 +173,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                             System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
                             System.out.println(response.body().getOriginAddresses().get(0));
                             System.out.println(response.body().getDestinationAddresses().get(0));
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 150) {
+                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= tmp_jarak) {
                                 try {
                                     if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                                         Intent intent = new Intent();
@@ -200,6 +204,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
         btn_qr_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(tmp_jarak);
                 String origin = session.getLat() + "," + session.getLng();
                 getJarak = api.getJarak(origin, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
                 getJarak.enqueue(new Callback<Jarak>() {
@@ -209,7 +214,7 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                             System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
                             System.out.println(response.body().getOriginAddresses().get(0));
                             System.out.println(response.body().getDestinationAddresses().get(0));
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= 100) {
+                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= tmp_jarak) {
                                 if (ContextCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                                     ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 50);
                                 }
@@ -232,6 +237,23 @@ public class PilihAbsensiActivity extends AppCompatActivity {
                         Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+    }
+
+    public void setJarak(){
+        getSettingJarak = api.getSettingJarak();
+        getSettingJarak.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful()) {
+                    tmp_jarak = Integer.parseInt(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
             }
         });
     }

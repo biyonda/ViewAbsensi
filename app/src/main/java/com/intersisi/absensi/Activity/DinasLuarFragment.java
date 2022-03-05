@@ -185,20 +185,19 @@ public class DinasLuarFragment extends Fragment implements OnMapReadyCallback {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                             && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         getCurrentLocation();
+                        try {
+                            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                                Intent intent = new Intent();
+                                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(intent, 102);
+                            } else {
+                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 100);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 105);
-                    }
-
-                    try {
-                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                            Intent intent = new Intent();
-                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(intent, 102);
-                        } else {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 100);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
             }

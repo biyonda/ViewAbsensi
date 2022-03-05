@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/gbr_keluar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
@@ -123,7 +123,7 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="ABSEN PULANG"
+                android:text="PULANG"
                 android:textColor="#E95557"
                 android:textStyle="bold"
                 android:textAlignment="center">

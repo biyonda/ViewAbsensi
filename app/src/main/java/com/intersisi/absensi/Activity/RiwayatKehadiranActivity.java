@@ -46,6 +46,7 @@ public class RiwayatKehadiranActivity extends AppCompatActivity {
     ArrayList<String> scan_date = new ArrayList<>();
     ArrayList<String> status = new ArrayList<>();
     ArrayList<String> dinas_luar = new ArrayList<>();
+    ArrayList<String> keterangan = new ArrayList<>();
 
     Session session;
     Api api;
@@ -86,14 +87,24 @@ public class RiwayatKehadiranActivity extends AppCompatActivity {
                             scan_date.clear();
                             status.clear();
                             dinas_luar.clear();
+                            keterangan.clear();
 
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 scan_date.add(response.body().getData().get(i).getScanDate());
                                 status.add(response.body().getData().get(i).getStatus());
                                 dinas_luar.add(response.body().getData().get(i).getDinasLuar().toString());
+                                if (response.body().getData().get(i).getDinasLuar() == 1) {
+                                    if (response.body().getData().get(i).getStsVerifikasi() == 2) {
+                                        keterangan.add("Belum di verifikasi");
+                                    } else {
+                                        keterangan.add("Terverifikasi");
+                                    }
+                                } else {
+                                    keterangan.add("-");
+                                }
                             }
 
-                            adapterRiwayatKehadiran = new AdapterRiwayatKehadiran(RiwayatKehadiranActivity.this, scan_date, status, dinas_luar);
+                            adapterRiwayatKehadiran = new AdapterRiwayatKehadiran(RiwayatKehadiranActivity.this, scan_date, status, dinas_luar, keterangan);
                             list_riwayat_kehadiran.setAdapter(adapterRiwayatKehadiran);
                             adapterRiwayatKehadiran.notifyDataSetChanged();
                         } else {

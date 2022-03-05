@@ -96,4 +96,7 @@ public interface Api {
             @Field("nip") String nip,
             @Field("password") String password
     );
+
+    @GET("getSettingJarak")
+    Call<BaseResponse> getSettingJarak();
 }

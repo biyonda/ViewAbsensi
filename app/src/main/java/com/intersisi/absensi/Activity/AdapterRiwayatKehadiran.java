@@ -26,8 +26,9 @@ public class AdapterRiwayatKehadiran extends ArrayAdapter<String> {
     private ArrayList<String> scan_date = new ArrayList<>();
     private ArrayList<String> status = new ArrayList<>();
     private ArrayList<String> dinas_luar = new ArrayList<>();
+    private ArrayList<String> keterangan = new ArrayList<>();
 
-    public AdapterRiwayatKehadiran(Activity context, ArrayList<String> scan_date, ArrayList<String> status, ArrayList<String> dinas_luar) {
+    public AdapterRiwayatKehadiran(Activity context, ArrayList<String> scan_date, ArrayList<String> status, ArrayList<String> dinas_luar, ArrayList<String> keterangan) {
         super(context, R.layout.adapter_riwayat_kehadiran, scan_date);
 
         this.context = context;
@@ -35,6 +36,7 @@ public class AdapterRiwayatKehadiran extends ArrayAdapter<String> {
         this.scan_date = scan_date;
         this.status = status;
         this.dinas_luar = dinas_luar;
+        this.keterangan = keterangan;
     }
 
     @SuppressLint("ResourceAsColor")
@@ -53,6 +55,7 @@ public class AdapterRiwayatKehadiran extends ArrayAdapter<String> {
 
         viewHolder.tgl_kehadiran.setText(scan_date.get(position).substring(0,10));
         viewHolder.jam_absen.setText(scan_date.get(position).substring(11));
+        viewHolder.keterangan.setText(keterangan.get(position));
 
         if (status.get(position).equals("1")) {
             viewHolder.jam_absen.setTextColor(Color.parseColor("#00B04E"));
