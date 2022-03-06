@@ -120,13 +120,6 @@ public class BerandaFragment extends Fragment {
             img_profil.setBackgroundResource(R.drawable.profile_photo_default);
         }
 
-        nama_pengguna.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInputBox(session.getNip());
-            }
-        });
-
         return view;
     }
 
@@ -158,42 +151,5 @@ public class BerandaFragment extends Fragment {
                 Toast.makeText(getContext(), "Error "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void showInputBox(String tmp_nip) {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.setTitle("Update User");
-        View v = getLayoutInflater().inflate(R.layout.adapter_qr, null);
-        dialog.setContentView(v);
-//        System.out.println(oldItem);
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.getWindow().setAttributes(lp);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        TextView close, nip;
-        ImageView qr;
-
-        close = v.findViewById(R.id.close);
-        nip = v.findViewById(R.id.nip);
-        qr = v.findViewById(R.id.qr);
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        QRGEncoder qrgEncoder = new QRGEncoder(tmp_nip, null, QRGContents.Type.TEXT, 200);
-        Bitmap qrBits = qrgEncoder.getBitmap();
-        qr.setImageBitmap(qrBits);
-
-        nip.setText(tmp_nip);
-
-        dialog.show();
     }
 }

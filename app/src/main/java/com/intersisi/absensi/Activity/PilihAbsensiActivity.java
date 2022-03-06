@@ -165,39 +165,17 @@ public class PilihAbsensiActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println(tmp_jarak);
                 String origin = session.getLat() + "," + session.getLng();
-                getJarak = api.getJarak(origin, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
-                getJarak.enqueue(new Callback<Jarak>() {
-                    @Override
-                    public void onResponse(Call<Jarak> call, Response<Jarak> response) {
-                        if (response.isSuccessful()) {
-                            System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
-                            System.out.println(response.body().getOriginAddresses().get(0));
-                            System.out.println(response.body().getDestinationAddresses().get(0));
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= tmp_jarak) {
-                                try {
-                                    if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                                        Intent intent = new Intent();
-                                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        startActivityForResult(intent, 102);
-                                    } else {
-                                        ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                Toast.makeText(PilihAbsensiActivity.this, "Anda tidak berada dalam radius Rs. Soebandi !!!", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
-                        }
+                try {
+                    if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        Intent intent = new Intent();
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 102);
+                    } else {
+                        ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
                     }
-
-                    @Override
-                    public void onFailure(Call<Jarak> call, Throwable t) {
-                        Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -206,39 +184,96 @@ public class PilihAbsensiActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println(tmp_jarak);
                 String origin = session.getLat() + "," + session.getLng();
-                getJarak = api.getJarak(origin, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
-                getJarak.enqueue(new Callback<Jarak>() {
-                    @Override
-                    public void onResponse(Call<Jarak> call, Response<Jarak> response) {
-                        if (response.isSuccessful()) {
-                            System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
-                            System.out.println(response.body().getOriginAddresses().get(0));
-                            System.out.println(response.body().getDestinationAddresses().get(0));
-                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= tmp_jarak) {
-                                if (ContextCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                                    ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 50);
-                                }
-                                //ask for authorisation
-                                else {
-                                    Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
-                                    startActivityForResult(i, 1);
-                                }
-                                    //start your camera
-                            } else {
-                                Toast.makeText(PilihAbsensiActivity.this, "Anda tidak berada dalam radius Rs. Soebandi !!!", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Jarak> call, Throwable t) {
-                        Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (ContextCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 50);
+                }
+                //ask for authorisation
+                else {
+                    Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
+                    startActivityForResult(i, 1);
+                }
             }
         });
+
+//        btn_absen_wajah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println(tmp_jarak);
+//                String origin = session.getLat() + "," + session.getLng();
+//                getJarak = api.getJarak(origin, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
+//                getJarak.enqueue(new Callback<Jarak>() {
+//                    @Override
+//                    public void onResponse(Call<Jarak> call, Response<Jarak> response) {
+//                        if (response.isSuccessful()) {
+//                            System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
+//                            System.out.println(response.body().getOriginAddresses().get(0));
+//                            System.out.println(response.body().getDestinationAddresses().get(0));
+//                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= tmp_jarak) {
+//                                try {
+//                                    if (ActivityCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+//                                        Intent intent = new Intent();
+//                                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                        startActivityForResult(intent, 102);
+//                                    } else {
+//                                        ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+//                                    }
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+//                            } else {
+//                                Toast.makeText(PilihAbsensiActivity.this, "Anda tidak berada dalam radius Rs. Soebandi !!!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        } else {
+//                            Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Jarak> call, Throwable t) {
+//                        Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
+//
+//        btn_qr_code.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println(tmp_jarak);
+//                String origin = session.getLat() + "," + session.getLng();
+//                getJarak = api.getJarak(origin, dest, "AIzaSyBhYpivDh3X593xIjPmfgqiMP3eB6KSbZM");
+//                getJarak.enqueue(new Callback<Jarak>() {
+//                    @Override
+//                    public void onResponse(Call<Jarak> call, Response<Jarak> response) {
+//                        if (response.isSuccessful()) {
+//                            System.out.println(response.body().getRows().get(0).getElements().get(0).getDistance().getValue());
+//                            System.out.println(response.body().getOriginAddresses().get(0));
+//                            System.out.println(response.body().getDestinationAddresses().get(0));
+//                            if (response.body().getRows().get(0).getElements().get(0).getDistance().getValue() <= tmp_jarak) {
+//                                if (ContextCompat.checkSelfPermission(PilihAbsensiActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                                    ActivityCompat.requestPermissions(PilihAbsensiActivity.this, new String[]{Manifest.permission.CAMERA}, 50);
+//                                }
+//                                //ask for authorisation
+//                                else {
+//                                    Intent i = new Intent(PilihAbsensiActivity.this, QrScanner.class);
+//                                    startActivityForResult(i, 1);
+//                                }
+//                                    //start your camera
+//                            } else {
+//                                Toast.makeText(PilihAbsensiActivity.this, "Anda tidak berada dalam radius Rs. Soebandi !!!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        } else {
+//                            Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Jarak> call, Throwable t) {
+//                        Toast.makeText(PilihAbsensiActivity.this, "Jarak tidak ditemukan", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
     }
 
     public void setJarak(){
