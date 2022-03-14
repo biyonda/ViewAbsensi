@@ -46,6 +46,7 @@ import com.intersisi.absensi.Table.Jarak;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -103,7 +104,7 @@ public class DinasDalamFragment extends Fragment {
 
         session = new Session(getContext());
         api = RetrofitClient.createServiceWithAuth(Api.class, session.getToken());
-        jadwalHariIni(session.getNip());
+//        jadwalHariIni(session.getNip());
 
 
         absenMasuk = api.getAbsen("1");
@@ -186,31 +187,67 @@ public class DinasDalamFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (titik_absen < hasil) {
-                    if (sts_jadwal == false) {
-                        Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (sts_masuk) {
-                            Toast.makeText(getContext(), "Anda telah presensi masuk", Toast.LENGTH_SHORT).show();
-                        } else {
-                            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                            Date date = new Date();
-                            String jam_skrg = formatter.format(date);
-                            System.out.println(jam_skrg);
-                            System.out.println(jam_mulai_masuk);
-                            System.out.println(jam_sampai_masuk);
-                            if (cekAfter(jam_skrg, jam_mulai_masuk) && cekBefore(jam_skrg, jam_sampai_masuk)) {
-                                Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                                it.putExtra("tipe", "masuk");
-                                startActivity(it);
-                            } else {
-                                if (cekAfter(jam_skrg, jam_sampai_masuk)) {
-                                    Toast.makeText(getContext(), "Sudah melewati jam presensi datang", Toast.LENGTH_SHORT).show();
+                    getJadwalHariIni = api.getJadwalHariIni(session.getNip());
+                    getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
+                        @Override
+                        public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
+                            if (response.isSuccessful()) {
+                                sts_jadwal = true;
+                                jam_mulai_masuk = response.body().getData().get(0).getMulaiMasuk();
+                                jam_sampai_masuk = response.body().getData().get(0).getSampaiMasuk();
+                                jam_mulai_pulang = response.body().getData().get(0).getMulaiPulang();
+                                jam_sampai_pulang = response.body().getData().get(0).getSampaiPulang();
+
+                                if (sts_masuk) {
+                                    Toast.makeText(getContext(), "Anda telah presensi masuk", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                                    Date date = new Date();
+                                    String jam_skrg = formatter.format(date);
+                                    System.out.println(jam_skrg);
+                                    System.out.println(jam_mulai_masuk);
+                                    System.out.println(jam_sampai_masuk);
+//                                    if (cekAfter(jam_skrg, jam_mulai_masuk) && cekBefore(jam_skrg, jam_sampai_masuk)) {
+//                                        Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+//                                        it.putExtra("tipe", "masuk");
+//                                        startActivity(it);
+//                                    } else {
+//                                        if (cekAfter(jam_skrg, jam_sampai_masuk)) {
+//                                            Toast.makeText(getContext(), "Sudah melewati jam presensi datang", Toast.LENGTH_SHORT).show();
+//                                        } else {
+//                                            Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+                                    try {
+                                        if (isTimeBetweenTwoTime(jam_mulai_masuk, jam_sampai_masuk, jam_skrg)) {
+                                            Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                                            it.putExtra("tipe", "masuk");
+                                            startActivity(it);
+                                        } else {
+                                            if (cekAfter(jam_skrg, jam_sampai_masuk)) {
+                                                Toast.makeText(getContext(), "Sudah melewati jam presensi datang", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), "Belum memasuki waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
+                            } else {
+//                                sts_jadwal = false;
+                                ApiError apiError = ErrorUtils.parseError(response);
+                                Log.d("TAG", "onResponse: " + apiError.getMessage());
+                                Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }
+
+                        @Override
+                        public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
+//                            sts_jadwal = false;
+                            Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
                     Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
                 }
@@ -221,31 +258,53 @@ public class DinasDalamFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (titik_absen < hasil) {
-                    if (sts_jadwal == false) {
-                        Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (sts_pulang) {
-                            Toast.makeText(getContext(), "Anda telah presensi pulang", Toast.LENGTH_SHORT).show();
-                        } else {
-                            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                            Date date = new Date();
-                            String jam_skrg = formatter.format(date);
-                            System.out.println(jam_skrg);
-                            System.out.println(jam_mulai_pulang);
-                            System.out.println(jam_sampai_pulang);
-                            if (cekAfter(jam_skrg, jam_mulai_pulang) && cekBefore(jam_skrg, jam_sampai_pulang)) {
-                                Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
-                                it.putExtra("tipe", "pulang");
-                                startActivity(it);
-                            } else {
-                                if (cekAfter(jam_skrg, jam_sampai_pulang)) {
-                                    Toast.makeText(getContext(), "Sudah melewati jam presensi pulang !!!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                    getJadwalHariIni = api.getJadwalHariIni(session.getNip());
+                    getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
+                        @Override
+                        public void onResponse(Call<BaseResponse<JadwalHariIni>> call, Response<BaseResponse<JadwalHariIni>> response) {
+                            if (response.isSuccessful()) {
+                                sts_jadwal = true;
+                                jam_mulai_masuk = response.body().getData().get(0).getMulaiMasuk();
+                                jam_sampai_masuk = response.body().getData().get(0).getSampaiMasuk();
+                                jam_mulai_pulang = response.body().getData().get(0).getMulaiPulang();
+                                jam_sampai_pulang = response.body().getData().get(0).getSampaiPulang();
+
+                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                                Date date = new Date();
+                                String jam_skrg = formatter.format(date);
+                                System.out.println(jam_skrg);
+                                System.out.println(jam_mulai_pulang);
+                                System.out.println(jam_sampai_pulang);
+                                try {
+                                    if (isTimeBetweenTwoTime(jam_mulai_pulang, jam_sampai_pulang, jam_skrg)) {
+                                        Intent it = new Intent(getContext(), PilihAbsensiActivity.class);
+                                        it.putExtra("tipe", "pulang");
+                                        startActivity(it);
+                                    } else {
+                                        if (cekAfter(jam_skrg, jam_sampai_pulang)) {
+                                            Toast.makeText(getContext(), "Sudah melewati jam presensi pulang !!!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getContext(), "Belum masuk waktu presensi !!!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
                                 }
+                            } else {
+//                                sts_jadwal = false;
+                                ApiError apiError = ErrorUtils.parseError(response);
+                                Log.d("TAG", "onResponse: " + apiError.getMessage());
+                                Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }
+
+                        @Override
+                        public void onFailure(Call<BaseResponse<JadwalHariIni>> call, Throwable t) {
+//                            sts_jadwal = false;
+                            Log.d("TAG", "onResponse: " + t.getMessage());
+                            Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
                     Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
                 }
@@ -280,6 +339,51 @@ public class DinasDalamFragment extends Fragment {
                 Log.d("TAG", "onResponse: " + t.getMessage());
             }
         });
+    }
+
+    public static boolean isTimeBetweenTwoTime(String initialTime, String finalTime,
+                                               String currentTime) throws ParseException {
+
+        String reg = "^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+        if (initialTime.matches(reg) && finalTime.matches(reg) &&
+                currentTime.matches(reg))
+        {
+            boolean valid = false;
+            //Start Time
+            //all times are from java.util.Date
+            Date inTime = new SimpleDateFormat("HH:mm:ss").parse(initialTime);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(inTime);
+
+            //Current Time
+            Date checkTime = new SimpleDateFormat("HH:mm:ss").parse(currentTime);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(checkTime);
+
+            //End Time
+            Date finTime = new SimpleDateFormat("HH:mm:ss").parse(finalTime);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(finTime);
+
+            if (finalTime.compareTo(initialTime) < 0)
+            {
+                calendar2.add(Calendar.DATE, 1);
+                calendar3.add(Calendar.DATE, 1);
+            }
+
+            java.util.Date actualTime = calendar3.getTime();
+            if ((actualTime.after(calendar1.getTime()) ||
+                    actualTime.compareTo(calendar1.getTime()) == 0) &&
+                    actualTime.before(calendar2.getTime()))
+            {
+                valid = true;
+                return valid;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     private boolean cekBefore(String time, String endtime) {
