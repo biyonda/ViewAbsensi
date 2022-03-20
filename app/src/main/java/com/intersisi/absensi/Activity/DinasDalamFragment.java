@@ -79,7 +79,7 @@ public class DinasDalamFragment extends Fragment {
 
     private GpsTracker gpsTracker;
     double hasil = 0;
-    double titik_absen = 250;
+    double titik_absen = 200;
 
     //Koordinat Soebandi
     double finalLat = -8.151507878490508;
@@ -186,7 +186,16 @@ public class DinasDalamFragment extends Fragment {
         btn_absen_masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (titik_absen < hasil) {
+                getLocation();
+                System.out.println(titik_absen+" | "+hasil);
+//                if (hasil > titik_absen) {
+//                    System.out.println("salah");
+//                } else {
+//                    System.out.println("benar");
+//                }
+                if (hasil > titik_absen) {
+                    Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
+                } else {
                     getJadwalHariIni = api.getJadwalHariIni(session.getNip());
                     getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
                         @Override
@@ -248,8 +257,6 @@ public class DinasDalamFragment extends Fragment {
                             Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                         }
                     });
-                } else {
-                    Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -257,7 +264,10 @@ public class DinasDalamFragment extends Fragment {
         btn_absen_pulang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (titik_absen < hasil) {
+                getLocation();
+                if (hasil > titik_absen) {
+                    Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
+                } else {
                     getJadwalHariIni = api.getJadwalHariIni(session.getNip());
                     getJadwalHariIni.enqueue(new Callback<BaseResponse<JadwalHariIni>>() {
                         @Override
@@ -305,10 +315,7 @@ public class DinasDalamFragment extends Fragment {
                             Toast.makeText(getContext(), "Tidak ada jadwal hari ini.", Toast.LENGTH_SHORT).show();
                         }
                     });
-                } else {
-                    Toast.makeText(getContext(), "Anda diluar radius presensi", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -431,7 +438,7 @@ public class DinasDalamFragment extends Fragment {
         if(gpsTracker.canGetLocation()){
             double initialLat = gpsTracker.getLatitude();
             double initialLong = gpsTracker.getLongitude();
-            hasil = CalculationByDistance(initialLat, initialLong, finalLat, finalLong) * 1000;
+            hasil = Math.round(CalculationByDistance(initialLat, initialLong, finalLat, finalLong) * 1000);
             jarak.setText(String.format("%.0f", hasil));
         }else{
             gpsTracker.showSettingsAlert();
